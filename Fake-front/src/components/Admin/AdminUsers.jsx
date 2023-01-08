@@ -1,8 +1,17 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-function AdminUsers() {
-  return <div className="admin-users">users</div>;
+import UserTable from "../Table/UserTable";
+function AdminUsers({ users }) {
+  const baseURL = "http://localhost:3001";
+
+  return (
+    <div className="admin-users">
+      users
+      {/* <button onClick={() => trying()}>click</button> */}
+      {users && <UserTable data={users} />}
+    </div>
+  );
 }
 
 export default AdminUsers;

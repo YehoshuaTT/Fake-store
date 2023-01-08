@@ -12,9 +12,10 @@ const validToken = async (req, res, next) => {
     console.log("data:    ", data);
     const result = jwt.verify(data, secret);
     console.log("result:    ", result);
-    res.status(201);
-    next();
+    // next();
+    return result.email;
   } catch (err) {
+    console.log("err", err);
     res.status(401).send("you are unauthorized to enter");
   }
 };

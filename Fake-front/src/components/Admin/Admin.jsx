@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-function Admin() {
+function Admin({ setNew }) {
   //   const baseURL = "http://localhost:3001";
 
   // const sendNewProduct = async () => {
@@ -22,16 +22,16 @@ function Admin() {
     <div className="admin-nav-bar-container">
       <nav className="admin-nav-bar">
         <ul>
-          <Link to="/editproduct"> products </Link>
+          <Link to="admin/editproduct">products</Link>
         </ul>
         <ul>
-          <Link to="/creat"> New Product </Link>
+          <Link to="admin/creat">New Product</Link>
         </ul>
         <ul>
-          <Link to="/sales"> Sales </Link>
+          <Link to="admin/sales"> Sales </Link>
         </ul>
         <ul>
-          <Link to="/users"> users </Link>
+          <Link to="admin/users"> users </Link>
         </ul>
       </nav>
     </div>

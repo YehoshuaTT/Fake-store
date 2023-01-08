@@ -33,4 +33,18 @@ const login = async (loginUserDetails) => {
   }
 };
 
-module.exports = { register, login };
+const info = async (req, res) => {
+  // console.log("user", user);
+
+  const email = await auth.validToken(req, res);
+  const isAdmin = await userController.findOne({
+    email: email,
+  });
+  console.log("isAdmin", isAdmin);
+  if (isAdmin.permissions == "admin") {
+    const allUsers = await userController.read({});
+    return allUsers;
+  }
+};
+
+module.exports = { register, login, info };

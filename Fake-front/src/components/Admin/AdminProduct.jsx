@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Table from "../Table/Table";
 
-function AdminProduct() {
+function AdminProduct({ prods, newProd, setNew }) {
   const baseURL = "http://localhost:3001";
-
+  setNew(false);
   const [pId, setpId] = useState("");
   const [pTitle, setpTitle] = useState("nail");
   const [pPrice, setpPrice] = useState(500);
@@ -81,23 +81,10 @@ function AdminProduct() {
     console.log(respons);
   };
 
-  const [prods, setProds] = useState();
-  const getAllproducts = async () => {
-    const { data } = await axios.get(`${baseURL}/product/all/`);
-    setProds(data);
-    console.log(prods);
-  };
-
-  useEffect(() => {
-    getAllproducts();
-  }, []);
-
-  console.log(prods);
-
   return (
     <div className="admin-update">
       <div className="get-pruduct"></div>
-      {prods && <Table data={prods} />}
+      {prods && <Table data={prods} newProd={newProd} />}
     </div>
   );
 }

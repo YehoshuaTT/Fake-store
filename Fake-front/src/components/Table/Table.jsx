@@ -3,9 +3,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRef } from "react";
 
-const Table = ({ data }) => {
+const Table = ({ data, newProd }) => {
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [editMode, setEditMode] = useState({});
+  const [tempValues, setTempValues] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [product, setProduct] = useState({});
+  const baseURL = "http://localhost:3001";
+  let photoInput = useRef();
+
+  useEffect(() => {
+    const fetchCategorys = async () => {
+      const { data } = await axios.get("http://localhost:3001/category/", {
+        headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setCategories(data);
+    };
+    fetchCategorys();
+  }, []);
 
   const sortedData = data.sort((a, b, i) => {
     if (sortBy === "name") {
@@ -19,24 +35,7 @@ const Table = ({ data }) => {
     }
   });
 
-  const baseURL = "http://localhost:3001";
   const [items, setItems] = useState(sortedData);
-  const [editMode, setEditMode] = useState({});
-  const [tempValues, setTempValues] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [newProductState, setNewProductState] = useState(false);
-  const [product, setProduct] = useState({});
-  let photoInput = useRef();
-  useEffect(() => {
-    const fetchCategorys = async () => {
-      const { data } = await axios.get("http://localhost:3001/category/", {
-        headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      setCategories(data);
-    };
-    fetchCategorys();
-  }, []);
-
   const handleEdit = (index, field) => {
     setTempValues({ ...tempValues, [index]: { ...items[index] } });
     setEditMode({ ...editMode, [index]: field });
@@ -108,7 +107,7 @@ const Table = ({ data }) => {
     <table id="edit-all-products-table">
       <thead>
         <tr>
-          {!newProductState && (
+          {!newProd && (
             <>
               <th>#</th>
               <th>ID</th>
@@ -151,7 +150,7 @@ const Table = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {!newProductState ? (
+        {!newProd ? (
           <>
             {sortedData.map((item, index) => (
               <tr key={item.id}>

@@ -24,7 +24,6 @@ function Layout({ token, showCat, setShowCat }) {
     };
     fetchCategorys();
   }, []);
-
   const getCategoryItems = async (e) => {
     console.log(e);
     const { data: res } = await axios.get(

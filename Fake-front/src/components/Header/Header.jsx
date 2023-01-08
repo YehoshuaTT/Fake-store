@@ -1,24 +1,20 @@
 import React from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-function Header({setShowCat}) {
-
-    
-    return (
-
-        <div id="header">
-            
-        <h2>Fake - But realistic store </h2>
-          <nav className="paging-links">
-        <Link to="/layout" onClick={()=> setShowCat(true)}>Home</Link>
-        <Link to="/">Admin</Link>
-          </nav>
-       
-        </div>
-    )
+function Header({ setShowCat, isAdmin }) {
+  return (
+    <div id="header">
+      <h2>Fake - But realistic store </h2>
+      <nav className="paging-links">
+        <Link to="/layout" onClick={() => setShowCat(true)}>
+          Home
+        </Link>
+        {isAdmin && <Link to="/admin">Admin</Link>}
+        <Link to="/user">Your Account</Link>
+      </nav>
+    </div>
+  );
 }
-export default Header
-
+export default Header;
 
 // const products = [
 //   {
@@ -300,7 +296,7 @@ export default Header
 // //       image: products[i].image,
 // //       inStock: products[i].inStock,
 // //       rating: products[i].rating,
-       
+
 // //     };
 // //     let respons = await axios.post(`http://localhost:3001/product`, updateProduct);
 // //   }
