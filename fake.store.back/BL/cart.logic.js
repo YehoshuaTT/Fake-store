@@ -1,9 +1,9 @@
 const cartData = require("../DL/cart/cart.controller");
 
 const cartUpdat = async (token, body) => {
-  const cart = await cartLogic.restorCart(token);
-  if (!cart) await cartLogic.createCart(token);
-  return (rescart = await cartLogic.updateCart(token, body));
+  const cart = await restorCart(token);
+  if (!cart) await createCart(token);
+  return (rescart = await updateCart(token, body));
 };
 
 const createCart = async (user_id) => {

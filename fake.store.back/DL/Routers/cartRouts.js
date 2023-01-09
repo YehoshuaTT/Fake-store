@@ -15,7 +15,7 @@ cartRouter.get("/:token", async (req, res) => {
 
 cartRouter.post("/:token", async (req, res) => {
   try {
-    cartUpdat(req.params.token, req.body);
+    cartLogic.cartUpdat(req.params.token, req.body);
   } catch (e) {
     console.log(e);
     res.sendStatus(500);

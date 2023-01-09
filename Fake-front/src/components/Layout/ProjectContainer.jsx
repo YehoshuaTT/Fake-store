@@ -72,7 +72,7 @@ function ProjectContainer({ isAdmin }) {
             </Route>
           )}
           <Route
-            path="layout/*"
+            path="layout/"
             element={<Layout setShowCat={setShowCat} showCat={showCat} />}
           />
         </Routes>
