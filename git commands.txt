@@ -1,0 +1,12 @@
+לןקאלי, רימוט
+
+branch <name> - יצרתי חדש
+branch - בודק איזה קיים
+ branch -a בודק איזה קיים גם בremote
+checkout עובר בין branch או commits 
+git branch -b <new_branch> - יוצר branch חדש ועובר אליו )chekout)
+לעדכן מהremote - git pull origin <brnach> 
+git add * / add -a / add -u
+git commit -am "message"
+git push origin <branch>  -העליתי לremote
+git push origin <master>
