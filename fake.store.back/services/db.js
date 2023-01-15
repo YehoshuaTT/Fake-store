@@ -5,7 +5,7 @@ async function connect() {
   try {
     mongoose.connect(
       MONGO_URL,
-      { useNewUrlParser: true, useUnifiedTopology: true },
+      { useNewUrlParser: true, useUnifiedTopology: true},
       (err) => {
         if (err) throw "Eror DB : " + err;
         console.log("Connection Succsess");
