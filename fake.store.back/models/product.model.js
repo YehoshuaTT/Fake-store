@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const ProductSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+const productSchema = new mongoose.Schema({
+  // id: {
+  //   type: Number,
+  //   required: true,
+  //   unique: true,
+  // },
   title: {
     type: String,
     required: true,
@@ -53,6 +53,12 @@ const ProductSchema = new mongoose.Schema({
   },
 });
 
-const ProductData = mongoose.model("product", ProductSchema);
+class ProductClass {
+  //Any special Database methods here
+}
 
-module.exports = { ProductData };
+productSchema.loadClass(ProductClass);
+
+const Product = mongoose.model("Product", productSchema);
+
+module.exports = Product;

@@ -1,40 +1,13 @@
 const express = require("express");
-const productRouts = express.Router();
-const productsLogic = require("../../BL/product.logic");
+const ProductController = require("../controllers/ProductController");
+const productRoutes = express.Router();
+const auth = require("../middleware/auth");
 
-// productRouts.post("/", async (req, res) => {
-//   console.log("Someone is trying to send a new product", req.body);
-//   try {
-//     const newProduct = await productsLogic.createProduct(req.body);
-//     if (!newProduct) {
-//       // res.sendStatus(405);
-//       console.log(newProduct);
-//     } else {
-//       res.send(newProduct);
-//     }
-//   } catch (e) {
-//     console.log(e);
-//     res.sendStatus(500);
-//   }
-// });
+productRoutes.post("/", ProductController.create());
 
-// productRouts.get("/", async (req, res) => {
-//   console.log("Someone wants to call a product");
-//   console.log("req: ", req.query);
-//   try {
-//     const product = await productsLogic.getProduct(req.query.id);
-//     if (!product) console.log(product);
-//     else {
-//       console.log(product);
-//       res.send(product);
-//     }
-//   } catch (e) {
-//     console.log(e);
-//     res.sendStatus(500);
-//   }
-// });
+productRoutes.get("/:id", auth, ProductController.show());
 
-productRouts.get("/all", async (req, res) => {
+productRoutes.get("/all", async (req, res) => {
   console.log("Someone wants to call a product");
   try {
     const product = await productsLogic.getAllProducts({});
@@ -48,7 +21,7 @@ productRouts.get("/all", async (req, res) => {
     // res.sendStatus(500);
   }
 });
-productRouts.get("/all/:catName", async (req, res) => {
+productRoutes.get("/all/:catName", async (req, res) => {
   console.log("Someone is calling product by category");
   try {
     const product = await productsLogic.getAllProducts({
@@ -65,7 +38,7 @@ productRouts.get("/all/:catName", async (req, res) => {
   }
 });
 
-productRouts.put("/", async (req, res) => {
+productRoutes.put("/", async (req, res) => {
   console.log("Updating a product");
   console.log("req: ", req.body);
   try {
@@ -79,7 +52,7 @@ productRouts.put("/", async (req, res) => {
   }
 });
 
-productRouts.put("/meny", async (req, res) => {
+productRoutes.put("/meny", async (req, res) => {
   console.log("Updating meny product");
   console.log("req: ", req.body);
   try {
@@ -96,4 +69,4 @@ productRouts.put("/meny", async (req, res) => {
   }
 });
 
-module.exports = productRouts;
+module.exports = productRoutes;
