@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const authService = require("../services/authService");
-
 const userSchema = require("./schemas/userSchema");
 
 class UserClass {
@@ -29,6 +28,11 @@ class UserClass {
     const tokenData = await authService.findByToken(token);
     const user = await this.findOne({ email: tokenData.email });
     return user;
+  }
+
+  static async index() {
+    const allUsers = await this.find({});
+    return allUsers;
   }
 }
 
