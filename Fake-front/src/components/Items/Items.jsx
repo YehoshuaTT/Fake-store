@@ -4,14 +4,18 @@ import { Link } from "react-router-dom";
 
 function Items({ catItems, increase, decrease }) {
   const [added, setAdded] = useState(false);
-
+  console.log(catItems);
   return (
     <div className="category-name-container">
       <div className="opend-category">
         {catItems.map((v, i) => {
           return (
             <div className="item-in-category">
-              <Link to={`/layout/single-item/${v.id}`} key={i} className="link">
+              <Link
+                to={`/layout/single-item/${v._id}`}
+                key={i}
+                className="link"
+              >
                 <img
                   className="img-in-category"
                   src={v.image}

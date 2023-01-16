@@ -17,7 +17,7 @@ function Layout({ token, showCat, setShowCat }) {
 
   useEffect(() => {
     const fetchCategorys = async () => {
-      const { data } = await axios.get("http://localhost:3001/category/", {
+      const { data } = await axios.get("http://localhost:3001/category/all  ", {
         headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
       });
       setCategories(data);
