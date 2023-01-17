@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import UserTable from "../Table/UserTable";
 
 function AdminUsers() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState();
   useEffect(() => {
     const getUsers = async () => {
       const { data } = await axios.get("http://localhost:3001/auth/users  ", {
