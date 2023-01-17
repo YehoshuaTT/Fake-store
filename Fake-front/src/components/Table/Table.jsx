@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRef } from "react";
 
-const Table = ({ data }) => {
+const Table = ({ data, newProductState }) => {
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -24,7 +24,6 @@ const Table = ({ data }) => {
   const [editMode, setEditMode] = useState({});
   const [tempValues, setTempValues] = useState({});
   const [categories, setCategories] = useState([]);
-  const [newProductState, setNewProductState] = useState(false);
   const [product, setProduct] = useState({});
   let photoInput = useRef();
   useEffect(() => {
