@@ -11,35 +11,38 @@ const UserTable = ({ data }) => {
   const [product, setProduct] = useState({});
   const baseURL = "http://localhost:3001";
 
-  const sortedData = data.sort((a, b, i) => {
-    if (sortBy === "name") {
-      if (a.title < b.title) return sortOrder === "asc" ? -1 : 1;
-      if (a.title > b.title) return sortOrder === "asc" ? 1 : -1;
-      return 0;
-    } else {
-      if (a[sortBy] < b[sortBy]) return sortOrder === "asc" ? -1 : 1;
-      if (a[sortBy] > b[sortBy]) return sortOrder === "asc" ? 1 : -1;
-      return i;
-    }
-  });
+  const sortedData =
+    data &&
+    data.length > 0 &&
+    data.sort((a, b, i) => {
+      if (sortBy === "name") {
+        if (a.title < b.title) return sortOrder === "asc" ? -1 : 1;
+        if (a.title > b.title) return sortOrder === "asc" ? 1 : -1;
+        return 0;
+      } else {
+        if (a[sortBy] < b[sortBy]) return sortOrder === "asc" ? -1 : 1;
+        if (a[sortBy] > b[sortBy]) return sortOrder === "asc" ? 1 : -1;
+        return i;
+      }
+    });
 
   const [items, setItems] = useState(sortedData);
   const handleEdit = (index, field) => {
-    setTempValues({ ...tempValues, [index]: { ...items[index] } });
+    setTempValues({ ...tempValues, [index]: { ...sortedData[index] } });
     setEditMode({ ...editMode, [index]: field });
   };
 
   const handleChange = (e, index) => {
-    const newItems = [...items];
+    const newItems = [...sortedData];
     newItems[index][e.target.name] = e.target.value;
     setItems(newItems);
   };
 
   const handleSave = (index) => {
     setItems([
-      ...items.slice(0, index),
+      ...sortedData.slice(0, index),
       tempValues[index],
-      ...items.slice(index + 1),
+      ...sortedData.slice(index + 1),
     ]);
     setEditMode({ ...editMode, [index]: null });
     setTempValues({ ...tempValues, [index]: null });
@@ -57,9 +60,9 @@ const UserTable = ({ data }) => {
 
   const handleCancel = (index) => {
     setItems([
-      ...items.slice(0, index),
+      ...sortedData.slice(0, index),
       tempValues[index],
-      ...items.slice(index + 1),
+      ...sortedData.slice(index + 1),
     ]);
     setEditMode({ ...editMode, [index]: null });
     setTempValues({ ...tempValues, [index]: null });
@@ -128,14 +131,12 @@ const UserTable = ({ data }) => {
               </td>
               <td onClick={() => handleEdit(index, "email")}>
                 {editMode[index] === "email" ? (
-                  <>
-                    <input
-                      type="text"
-                      name="email"
-                      value={item.email}
-                      onChange={(e) => handleChange(e, index)}
-                    />
-                  </>
+                  <input
+                    type="text"
+                    name="email"
+                    value={item.email}
+                    onChange={(e) => handleChange(e, index)}
+                  />
                 ) : (
                   item.email
                 )}
@@ -143,21 +144,20 @@ const UserTable = ({ data }) => {
               <td onClick={() => handleEdit(index, "dob")}>
                 {editMode[index] === "dob" ? (
                   <input
-                    type="date"
+                    type="text"
                     name="dob"
                     value={item.dob}
                     onChange={(e) => handleChange(e, index)}
                   />
                 ) : (
-                  item.dob.slice(0, 10)
-                  // "sa"
+                  item.dob
                 )}
               </td>
-              <td onClick={() => handleEdit(index, "pass")}>
-                {editMode[index] === "pass" ? (
+              <td onClick={() => handleEdit(index, "password")}>
+                {editMode[index] === "password" ? (
                   <input
                     type="text"
-                    name="pass"
+                    name="password"
                     value={item.password}
                     onChange={(e) => handleChange(e, index)}
                   />
@@ -165,32 +165,21 @@ const UserTable = ({ data }) => {
                   item.password
                 )}
               </td>
-              <td onClick={() => handleEdit(index, "permissions")}>
-                {editMode[index] === "permissions" ? (
-                  <select
+              <td onClick={() => handleEdit(index, "permission")}>
+                {editMode[index] === "permission" ? (
+                  <input
                     type="text"
-                    name="permissions"
+                    name="permission"
                     value={item.permission}
                     onChange={(e) => handleChange(e, index)}
-                  >
-                    <option value={"admin"}>Admin</option>;
-                    <option value={"costumer"}>Costumer</option>;
-                    <option value={"editor"}>Editor</option>;
-                  </select>
+                  />
                 ) : (
-                  item.permissions
+                  item.permission
                 )}
               </td>
               <td>
-                <button onClick={() => handleCart()}>User cart</button>
-              </td>
-              <td>
-                {editMode[index] && (
-                  <>
-                    <button onClick={() => handleSave(index)}>Save</button>
-                    <button onClick={() => handleCancel(index)}>Cancel</button>
-                  </>
-                )}
+                <button onClick={() => handleSave(index)}>Save</button>
+                <button onClick={() => handleCancel(index)}>Cancel</button>
               </td>
             </tr>
           ))}

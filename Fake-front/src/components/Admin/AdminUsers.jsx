@@ -18,7 +18,7 @@ function AdminUsers() {
   return (
     <div className="admin-users">
       users
-      {users.length > 0 && <UserTable data={users} />}
+      {users && <UserTable data={users} />}
     </div>
   );
 }
