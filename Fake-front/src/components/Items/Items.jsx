@@ -2,9 +2,8 @@ import { useState } from "react";
 import { React } from "react";
 import { Link } from "react-router-dom";
 
-function Items({ catItems, increase, decrease }) {
+function Items({ catItems, increase, decrease, cartItem }) {
   const [added, setAdded] = useState(false);
-  console.log(catItems);
   return (
     <div className="category-name-container">
       <div className="opend-category">
@@ -23,9 +22,8 @@ function Items({ catItems, increase, decrease }) {
                 ></img>
               </Link>
               <div className="price">{v.price} $</div>
-              {added ? (
+              {cartItem.includes(v) ? (
                 <div className="buttons-in-item">
-                  {" "}
                   <img
                     src="https://findicons.com/files/icons/1014/ivista/128/plus.png"
                     className="inc-dec-category"

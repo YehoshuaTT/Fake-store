@@ -12,7 +12,6 @@ function Layout({ token, showCat, setShowCat }) {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(null);
   const [catItems, setCatItems] = useState([]);
-
   const cart_user_id = localStorage.getItem("email");
 
   useEffect(() => {
@@ -35,18 +34,6 @@ function Layout({ token, showCat, setShowCat }) {
     setCategory(e);
     console.log(items);
   };
-
-  useEffect(() => {
-    const sendCartToDB = async () => {
-      const theCart = {
-        id: cart_user_id,
-        products: cartItem,
-      };
-      console.log("thecart: ", theCart);
-      await axios.post(`http://localhost:3001/cart/${cart_user_id}`, theCart);
-    };
-    sendCartToDB();
-  }, [cartItem]);
 
   const increase = (e) => {
     let allItems = [...cartItem];

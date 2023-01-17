@@ -3,21 +3,19 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 function Cart({ cartItem, setCartItem, decrease, increase }) {
+  const [total, setTotal] = useState(0);
+  const [firstTime, setFirstTime] = useState(true);
   const cart_user_id = localStorage.getItem("email");
 
-  useEffect(() => {
-    const getTheCart = async () => {
-      const { data } = await axios.get(
-        `http://localhost:3001/cart/${cart_user_id}`
-      );
-      console.log(data);
-      setCartItem(data.products);
-    };
-    getTheCart();
-    console.log("this is what i got from the DB", cartItem);
-  }, []);
+  const getTheCart = async () => {
+    const { data } = await axios.get(
+      `http://localhost:3001/cart/${cart_user_id}`
+    );
+    console.log("data", data);
+    setCartItem(data.products);
+    setFirstTime(false);
+  };
 
-  const [total, setTotal] = useState(0);
   useEffect(() => {
     const updateTotal = () => {
       let calc = 0;
@@ -27,10 +25,27 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
       setTotal(calc);
     };
     updateTotal();
-  }, [cartItem]);
+  }, [cartItem.length > 0 && cartItem]);
 
-  const emptyTheCart = async () => {
+  useEffect(() => {
+    const sendCartToDB = async () => {
+      const theCart = {
+        id: cart_user_id,
+        products: cartItem,
+      };
+      await axios.post(`http://localhost:3001/cart/${cart_user_id}`, theCart);
+    };
+    sendCartToDB();
+  }, [total]);
+
+  const empy = async () => {
     setCartItem([]);
+    const theCart = {
+      id: cart_user_id,
+      products: [],
+      empty: true,
+    };
+    await axios.post(`http://localhost:3001/cart/${cart_user_id}`, theCart);
   };
 
   return (
@@ -38,9 +53,15 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
       <div className="cart-top-part">
         <h3>Cart: {cartItem.length} items </h3>
         <h3>Total {total.toFixed(2)} $</h3>
-        <button className="empty" onClick={() => emptyTheCart()}>
-          empty the cart
-        </button>
+        {firstTime ? (
+          <button className="empty" onClick={() => getTheCart()}>
+            click for your cart items
+          </button>
+        ) : (
+          <button className="empty" onClick={() => empy()}>
+            empty the cart
+          </button>
+        )}
       </div>
       <div className="items-in-cart">
         {cartItem.map((i, i2) => {
