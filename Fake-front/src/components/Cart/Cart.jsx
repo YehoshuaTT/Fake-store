@@ -53,14 +53,16 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
       <div className="cart-top-part">
         <h3>Cart: {cartItem.length} items </h3>
         <h3>Total {total.toFixed(2)} $</h3>
-        {firstTime ? (
+        {cartItem.length == 0 && firstTime ? (
           <button className="empty" onClick={() => getTheCart()}>
             click for your cart items
           </button>
         ) : (
-          <button className="empty" onClick={() => empy()}>
-            empty the cart
-          </button>
+          cartItem.length !== 0 && (
+            <button className="empty" onClick={() => empy()}>
+              empty the cart
+            </button>
+          )
         )}
       </div>
       <div className="items-in-cart">

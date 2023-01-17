@@ -34,6 +34,10 @@ class UserClass {
     const allUsers = await this.find({});
     return allUsers;
   }
+  static async indexWithCarts() {
+    const allUsers = await this.find({}).populate;
+    return allUsers;
+  }
 }
 
 userSchema.loadClass(UserClass);

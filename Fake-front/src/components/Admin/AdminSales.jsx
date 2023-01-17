@@ -1,24 +1,26 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import CartTable from "../Table/CartTable";
 function AdminSales() {
-  //   const baseURL = "http://localhost:3001";
+  const [carts, setCarts] = useState(null);
+  const baseURL = "http://localhost:3001";
 
-  // const sendNewProduct = async () => {
-  //   let newProduct = {
-  //     id: Math.random(),
-  //     title: pTitle,
-  //     price: pPrice,
-  //     description: pDescription,
-  //     category: pCategory,
-  //     image: pImage,
-  //     inStock: pInStock,
-  //   };
-  //   let respons = await axios.post(`${baseURL}/product`, newProduct);
-  //   console.log(respons);
-  // };
+  useEffect(() => {
+    const getCarts = async () => {
+      const { data } = await axios.get(`${baseURL}/auth/users/carts`);
+      console.log(data);
+      setCarts(data);
+    };
+    getCarts();
+  }, []);
 
-  return <div className="admin-sales">AdminSales</div>;
+  return (
+    <div className="admin-sales">
+      AdminSales
+      {carts && <CartTable data={carts} />}
+    </div>
+  );
 }
 
 export default AdminSales;
