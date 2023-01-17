@@ -1,10 +1,8 @@
 import "./table.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
 
 const UserTable = ({ data }) => {
+  console.log(data);
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [editMode, setEditMode] = useState({});

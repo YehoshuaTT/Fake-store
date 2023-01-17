@@ -1,8 +1,26 @@
 import axios from "axios";
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import UserTable from "../Table/UserTable";
+
 function AdminUsers() {
-  return <div className="admin-users">users</div>;
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const getUsers = async () => {
+      const { data } = await axios.get("http://localhost:3001/auth/users  ", {
+        headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      console.log(data);
+      setUsers(data);
+    };
+    getUsers();
+  }, []);
+
+  return (
+    <div className="admin-users">
+      users
+      {users.length > 0 && <UserTable data={users} />}
+    </div>
+  );
 }
 
 export default AdminUsers;
