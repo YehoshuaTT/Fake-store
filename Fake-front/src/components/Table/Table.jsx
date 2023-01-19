@@ -28,9 +28,7 @@ const Table = ({ data, newProductState }) => {
   let photoInput = useRef();
   useEffect(() => {
     const fetchCategorys = async () => {
-      const { data } = await axios.get("http://localhost:3001/category/", {
-        headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const { data } = await axios.get(`${baseURL}/category/all`);
       setCategories(data);
     };
     fetchCategorys();

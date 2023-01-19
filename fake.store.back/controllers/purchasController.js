@@ -1,17 +1,26 @@
 const Purchas = require("../models/schemas/purchasesSchema");
 const User = require("../models/UserModel");
 const Cart = require("../models/cart.model");
+const Product = require("../models/product.model");
 class Purchases {
   static async purchas(req, res) {
     try {
-      const theCart = await Cart.findOne({ id: req.params.id });
+      //creating
       const purchas = await Purchas.create({
         userId: req.params.id,
-        products: theCart._doc.products,
+        products: req.body.purchases,
       });
+      //updating the stock
+      const stock = req.body.purchases.forEach(async (v) => {
+        await Product.findByIdAndUpdate(v, {
+          $inc: { inStock: -1 },
+        });
+      });
+      // ref for user
       const intoUser = await User.findByIdAndUpdate(req.params.id, {
         $push: { purchases: purchas._id },
       });
+
       if (intoUser) res.status(200).send(purchas);
     } catch (e) {
       console.log(e);
