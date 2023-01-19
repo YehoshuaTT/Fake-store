@@ -5,18 +5,18 @@ import Items from "../Items/Items";
 import Cart from "../Cart/Cart";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Outlet, Route, Routes } from "react-router-dom";
 
 function Layout({ token, showCat, setShowCat }) {
   const [cartItem, setCartItem] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(null);
   const [catItems, setCatItems] = useState([]);
-  const cart_user_id = localStorage.getItem("email");
-
+  const cart_user_id = localStorage.getItem("id");
+  const baseURL = "http://localhost:3001";
   useEffect(() => {
     const fetchCategorys = async () => {
-      const { data } = await axios.get("http://localhost:3001/category/all  ", {
+      const { data } = await axios.get(`${baseURL}/category/all`, {
         headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
       });
       setCategories(data);
@@ -26,9 +26,7 @@ function Layout({ token, showCat, setShowCat }) {
 
   const getCategoryItems = async (e) => {
     console.log(e);
-    const { data: res } = await axios.get(
-      `http://localhost:3001/product/all/${e}`
-    );
+    const { data: res } = await axios.get(`${baseURL}/product/all/${e}`);
     const items = res.filter((v) => v.category === e);
     setCatItems(items);
     setCategory(e);
@@ -36,8 +34,9 @@ function Layout({ token, showCat, setShowCat }) {
   };
 
   const increase = (e) => {
+    sendCartToDB(e._id, "add");
     let allItems = [...cartItem];
-    const todo = allItems.findIndex((i) => i.id === e.id);
+    const todo = allItems.findIndex((i) => i._id === e._id);
     if (todo === -1) allItems.push(e);
     else ++allItems[todo].amount;
 
@@ -45,7 +44,8 @@ function Layout({ token, showCat, setShowCat }) {
   };
 
   const decrease = (item, amount) => {
-    const id = cartItem.findIndex((v) => v.id === item.id);
+    sendCartToDB(item._id, "remove");
+    const id = cartItem.findIndex((v) => v._id === item._id);
     if (id == -1) return;
     if (amount === 1) {
       let toBeChange = [...cartItem];
@@ -55,9 +55,18 @@ function Layout({ token, showCat, setShowCat }) {
       item.amount = amount - 1;
       let toBeChange = [...cartItem];
       toBeChange[id] = item;
-
       setCartItem(toBeChange);
     }
+  };
+
+  const sendCartToDB = async (product, AddOrRemove) => {
+    const theCart = {
+      id: cart_user_id,
+      products: product,
+      type: AddOrRemove,
+    };
+    console.log(theCart);
+    await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
   };
 
   return (
@@ -114,6 +123,7 @@ function Layout({ token, showCat, setShowCat }) {
             }
           />
         </Routes>
+        <Outlet />
       </div>
     </div>
   );

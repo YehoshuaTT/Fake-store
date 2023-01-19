@@ -18,22 +18,23 @@ class CartController {
 
   static async update(req, res) {
     try {
-      const cart = await Cart.findOne({ id: req.params.user_id });
-      if (!cart) {
-        await Cart.create({ id: req.params.user_id, products: req.products });
-        res.sendStatus(200);
-      } else {
-        const prod = [...req.body.products];
-        console.log(prod);
-        const reCart = await Cart.findOneAndUpdate(
-          { id: req.params.user_id },
-          {
-            $addToSet: {
-              products: { $each: prod },
-            },
-          }
+      if (req.body.type === "empty") {
+        const remove = await Cart.updateOne(
+          { id: req.body.id },
+          { products: [] }
         );
-        res.sendStatus(200);
+      } else if (req.body.type === "remove") {
+        const remove = await Cart.updateOne(
+          { id: req.body.id },
+          { $pull: { products: req.body.products } }
+        );
+        if (remove) res.status(200);
+      } else {
+        const add = await Cart.findOneAndUpdate(
+          { id: req.body.id },
+          { $push: { products: req.body.products } }
+        );
+        if (add) res.status(200);
       }
     } catch (e) {
       console.log(e);
@@ -72,13 +73,16 @@ class CartController {
       res.sendStatus(401);
     }
   }
+
+  static async creat(id) {
+    const carts = await Cart.create({ id: id });
+    if (carts) return carts;
+    else return null;
+  }
 }
 
 module.exports = CartController;
 
-// increase;
-// decrease;
-// add;
 // remove;
 // clear;
 // call;

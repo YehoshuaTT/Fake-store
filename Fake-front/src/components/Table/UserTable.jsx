@@ -2,7 +2,6 @@ import "./table.css";
 import React, { useEffect, useState } from "react";
 
 const UserTable = ({ data }) => {
-  console.log(data);
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [editMode, setEditMode] = useState({});
@@ -96,7 +95,8 @@ const UserTable = ({ data }) => {
           <th>Date Of Birth</th>
           <th>Password</th>
           <th>Permission</th>
-          <th>Cart</th>
+          <th>Purchases</th>
+          <th>edit</th>
         </tr>
       </thead>
       <tbody>
@@ -150,7 +150,7 @@ const UserTable = ({ data }) => {
                     onChange={(e) => handleChange(e, index)}
                   />
                 ) : (
-                  item.dob
+                  item.dob.slice(0, 10)
                 )}
               </td>
               <td onClick={() => handleEdit(index, "password")}>
@@ -167,16 +167,23 @@ const UserTable = ({ data }) => {
               </td>
               <td onClick={() => handleEdit(index, "permission")}>
                 {editMode[index] === "permission" ? (
-                  <input
-                    type="text"
-                    name="permission"
-                    value={item.permission}
-                    onChange={(e) => handleChange(e, index)}
-                  />
+                  <>
+                    <select
+                      type="text"
+                      name="permissions"
+                      value={item.permissions}
+                      onChange={(e) => handleChange(e, index)}
+                    >
+                      <option value="admin">Admin</option>;
+                      <option value="editor">editor</option>;
+                      <option value="customer">Customer</option>;
+                    </select>
+                  </>
                 ) : (
-                  item.permission
+                  item.permissions
                 )}
               </td>
+              <td>{item.purchases.length}</td>
               <td>
                 <button onClick={() => handleSave(index)}>Save</button>
                 <button onClick={() => handleCancel(index)}>Cancel</button>

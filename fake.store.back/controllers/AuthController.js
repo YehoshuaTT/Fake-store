@@ -1,11 +1,13 @@
 const User = require("../models/UserModel");
 const { createToken } = require("../services/authService");
+const cart = require("./CartController");
 class AuthController {
   static async register(req, res) {
     console.log("Someone is trying to register");
     try {
       const newUser = await User.register(req.body);
       if (newUser) {
+        const carting = await cart.creat(newUser._id);
         let token = await createToken(newUser.email);
         res.send({ newUser, token });
       } else res.status(400).send("There is a problem with the details");
@@ -21,7 +23,7 @@ class AuthController {
       if (isAUser) {
         res.status(200).send(isAUser);
         console.log("user is logged in");
-      } else res.send({ message: "worng email or password" });
+      } else res.status(401).send({ message: "worng email or password" });
     } catch (e) {
       console.log(e);
       res.sendStatus(401);

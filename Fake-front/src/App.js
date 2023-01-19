@@ -14,7 +14,7 @@ function App() {
           setIsAdmin={setIsAdmin}
         />
       )}
-      {canLog && <ProjectContainer isAdmin={isAdmin} />}
+      {canLog && <ProjectContainer isAdmin={isAdmin} setCanLog={setCanLog} />}
     </div>
   );
 }

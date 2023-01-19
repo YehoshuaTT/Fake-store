@@ -9,7 +9,7 @@ import AdminUsers from "../Admin/AdminUsers";
 import AdminSales from "../Admin/AdminSales";
 import axios from "axios";
 const baseURL = "http://localhost:3001";
-function ProjectContainer({ isAdmin }) {
+function ProjectContainer({ isAdmin, setCanLog }) {
   const [showCat, setShowCat] = useState(true);
   const [prods, setProds] = useState();
   const [newProductState, setNewProductState] = useState(true);
@@ -25,7 +25,7 @@ function ProjectContainer({ isAdmin }) {
   return (
     <div className="project-container">
       <BrowserRouter>
-        <Header setShowCat={setShowCat} />
+        <Header setShowCat={setShowCat} setCanLog={setCanLog} />
         {isAdmin && <Admin />}
         <Routes>
           {isAdmin && (

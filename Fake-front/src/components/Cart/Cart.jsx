@@ -7,6 +7,7 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
   const [firstTime, setFirstTime] = useState(true);
   const cart_user_id = localStorage.getItem("id");
   const baseURL = "http://localhost:3001";
+
   const getTheCart = async () => {
     const { data } = await axios.get(`${baseURL}/cart/${cart_user_id}`);
     console.log("data", data);
@@ -25,31 +26,19 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
     updateTotal();
   }, [cartItem.length > 0 && cartItem]);
 
-  useEffect(() => {
-    const sendCartToDB = async () => {
-      const theCart = {
-        id: cart_user_id,
-        // products: cartItem.map((v) => {
-        //   return [v._id];
-        // }),
-        products: cartItem.flatMap((v) => {
-          return Array.from({ length: v.amount }, () => [v._id]);
-        }),
-      };
-      console.log(theCart);
-      await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
-    };
-    sendCartToDB();
-  }, [total]);
-
   const empy = async () => {
+    const removingProcess = [...cartItem].forEach((v) => {
+      v.amount = 1;
+    });
+    setCartItem([removingProcess]);
     setCartItem([]);
     const theCart = {
       id: cart_user_id,
       products: [],
-      empty: true,
+      type: "empty",
     };
     await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
+    console.log(cartItem);
   };
 
   const endOfBuyingCycle = async () => {
@@ -89,7 +78,6 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
                 <div className="cart-title">{`${i.title
                   .split(" ", 4)
                   .join(" ")}...`}</div>
-                <div className="cart-amount">{`amount: ${i.amount}`}</div>
                 <div className="cart-price">{`price: ${(
                   i.price * i.amount
                 ).toFixed(2)} $`}</div>
