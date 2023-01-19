@@ -20,7 +20,8 @@ class UserClass {
     if (!user) return null;
 
     const validation = await bcrypt.compare(password, user.password);
-    if (validation) return { token: await authService.createToken(email) };
+    if (validation)
+      return { token: await authService.createToken(email), id: user._id };
     else return null;
   }
 

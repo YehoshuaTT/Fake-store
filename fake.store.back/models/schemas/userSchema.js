@@ -41,7 +41,7 @@ const userSchema = new Schema({
   },
   purchases: {
     type: Object,
-    default: [{}],
+    default: [],
   },
   isActive: {
     type: Boolean,

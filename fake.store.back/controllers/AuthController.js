@@ -36,37 +36,6 @@ class AuthController {
       res.sendStatus(401);
     }
   }
-  static async purchas(req, res) {
-    try {
-      const user = await User.findOne({ id: req.params.email });
-      const purchas = await User.findByIdAndUpdate(user._id, {
-        $push: { purchases: req.body.purchases },
-      });
-      if (purchas) res.status(200).send(purchas);
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(401);
-    }
-  }
-  static async purchasIndex(req, res) {
-    try {
-      const purchas = await User.findOne({ id: req.params.email });
-      if (purchas) res.status(200).send(purchas._doc.purchases);
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(401);
-    }
-  }
-
-  static async carts(req, res) {
-    try {
-      const carts = await User.index();
-      if (carts) res.status(200).send(carts);
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(401);
-    }
-  }
 }
 
 module.exports = AuthController;

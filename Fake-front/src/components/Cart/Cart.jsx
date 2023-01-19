@@ -5,12 +5,10 @@ import { useState } from "react";
 function Cart({ cartItem, setCartItem, decrease, increase }) {
   const [total, setTotal] = useState(0);
   const [firstTime, setFirstTime] = useState(true);
-  const cart_user_id = localStorage.getItem("email");
-
+  const cart_user_id = localStorage.getItem("id");
+  const baseURL = "http://localhost:3001";
   const getTheCart = async () => {
-    const { data } = await axios.get(
-      `http://localhost:3001/cart/${cart_user_id}`
-    );
+    const { data } = await axios.get(`${baseURL}/cart/${cart_user_id}`);
     console.log("data", data);
     setCartItem(data.products);
     setFirstTime(false);
@@ -31,9 +29,15 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
     const sendCartToDB = async () => {
       const theCart = {
         id: cart_user_id,
-        products: cartItem,
+        // products: cartItem.map((v) => {
+        //   return [v._id];
+        // }),
+        products: cartItem.flatMap((v) => {
+          return Array.from({ length: v.amount }, () => [v._id]);
+        }),
       };
-      await axios.post(`http://localhost:3001/cart/${cart_user_id}`, theCart);
+      console.log(theCart);
+      await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
     };
     sendCartToDB();
   }, [total]);
@@ -45,9 +49,20 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
       products: [],
       empty: true,
     };
-    await axios.post(`http://localhost:3001/cart/${cart_user_id}`, theCart);
+    await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
   };
 
+  const endOfBuyingCycle = async () => {
+    const { data } = await axios.put(
+      `${baseURL}/auth/purchas/${cart_user_id}`,
+      { purchases: cartItem }
+    );
+    if (data) {
+      alert("your purchaces was sent to delivery");
+
+      empy();
+    }
+  };
   return (
     <nav id="cart">
       <div className="cart-top-part">
@@ -96,6 +111,7 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
           );
         })}
       </div>
+      <button onClick={() => endOfBuyingCycle()}>Buy</button>
     </nav>
   );
 }

@@ -62,6 +62,7 @@ function UserLogin({ setCanLog, canLog }) {
       if (response.status == "200") {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", email);
+        localStorage.setItem("id", response.data.id);
         console.log("great, authenticattion passed");
         setCanLog(!canLog);
       }
