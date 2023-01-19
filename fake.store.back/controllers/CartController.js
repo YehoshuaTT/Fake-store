@@ -1,6 +1,5 @@
-const express = require("express");
-const cartRouter = express.Router();
 const Cart = require("../models/cart.model");
+const User = require("../models/UserModel");
 
 class CartController {
   static async index(req, res) {
@@ -36,28 +35,6 @@ class CartController {
         );
         if (add) res.status(200);
       }
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(401);
-    }
-  }
-
-  static async purchas(req, res) {
-    try {
-      const user = await User.findOne({ _id: req.params.id });
-      const purchas = await User.findByIdAndUpdate(user._id, {
-        $push: { purchases: req.body.purchases },
-      });
-      if (purchas) res.status(200).send(purchas);
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(401);
-    }
-  }
-  static async purchasIndex(req, res) {
-    try {
-      const purchas = await User.findOne({ id: req.params.email });
-      if (purchas) res.status(200).send(purchas._doc.purchases);
     } catch (e) {
       console.log(e);
       res.sendStatus(401);

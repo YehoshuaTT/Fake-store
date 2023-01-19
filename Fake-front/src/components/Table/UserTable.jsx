@@ -96,7 +96,7 @@ const UserTable = ({ data }) => {
           <th>Password</th>
           <th>Permission</th>
           <th>Purchases</th>
-          <th>edit</th>
+          {editMode[0] && <th>edit</th>}
         </tr>
       </thead>
       <tbody>
@@ -184,10 +184,12 @@ const UserTable = ({ data }) => {
                 )}
               </td>
               <td>{item.purchases.length}</td>
-              <td>
-                <button onClick={() => handleSave(index)}>Save</button>
-                <button onClick={() => handleCancel(index)}>Cancel</button>
-              </td>
+              {editMode[index] && (
+                <td>
+                  <button onClick={() => handleSave(index)}>Save</button>
+                  <button onClick={() => handleCancel(index)}>Cancel</button>
+                </td>
+              )}
             </tr>
           ))}
         </>

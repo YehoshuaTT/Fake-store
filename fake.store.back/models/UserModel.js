@@ -32,11 +32,18 @@ class UserClass {
   }
 
   static async index() {
-    const allUsers = await this.find({});
+    const allUsers = await this.find({}).populate({
+      path: "purchases",
+      model: "Purchas",
+      populate: {
+        path: "products",
+        model: "Product",
+      },
+    });
     return allUsers;
   }
   static async indexWithCarts() {
-    const allUsers = await this.find({}).populate;
+    const allUsers = await this.find({}).populate();
     return allUsers;
   }
 }

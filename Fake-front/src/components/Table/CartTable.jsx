@@ -53,35 +53,6 @@ const Table = ({ data }) => {
     ]);
     setEditMode({ ...editMode, [index]: null });
     setTempValues({ ...tempValues, [index]: null });
-    const options = {
-      method: "PUT",
-      url: `${baseURL}/products'`,
-      data: items[index],
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    console.log("theprodect: ", items[index]);
-    // sendUpdate();
-  };
-
-  const SendNew = () => {
-    const toUpdate = product;
-    if (!product.category) {
-      alert("no category");
-      return;
-    }
-
-    const options = {
-      method: "PUT",
-      url: `${baseURL}/products'`,
-      data: product,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    console.log("theproduct: ", product);
-    // sendUpdate();
   };
 
   const handleCancel = (index) => {
@@ -109,7 +80,7 @@ const Table = ({ data }) => {
           </th>
           <th
             onClick={() => {
-              setSortBy("category");
+              setSortBy("email");
               setSortOrder(sortOrder === "asc" ? "desc" : "asc");
             }}
           >
@@ -117,7 +88,7 @@ const Table = ({ data }) => {
           </th>
           <th
             onClick={() => {
-              setSortBy("price");
+              setSortBy("Purchases");
               setSortOrder(sortOrder === "asc" ? "desc" : "asc");
             }}
           >
@@ -125,13 +96,12 @@ const Table = ({ data }) => {
           </th>
           <th
             onClick={() => {
-              setSortBy("Purchases");
+              setSortBy("total");
               setSortOrder(sortOrder === "asc" ? "desc" : "asc");
             }}
           >
-            In Stock
+            Total
           </th>
-          <th>description</th>
         </tr>
       </thead>
       <tbody>
@@ -187,39 +157,6 @@ const Table = ({ data }) => {
 
                   // item.purchases.total
                 }
-              </td>
-              <td onClick={() => handleEdit(index, "inStock")}>
-                {editMode[index] === "inStock" ? (
-                  <input
-                    type="text"
-                    name="inStock"
-                    value={item.inStock}
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                ) : (
-                  item.inStock
-                )}
-              </td>
-              <td onClick={() => handleEdit(index, "description")}>
-                {editMode[index] === "description" ? (
-                  <textarea
-                    id="description"
-                    type="text"
-                    name="description"
-                    value={item.description}
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                ) : (
-                  item.description
-                )}
-              </td>
-              <td>
-                {editMode[index] && (
-                  <>
-                    <button onClick={() => handleSave(index)}>Save</button>
-                    <button onClick={() => handleCancel(index)}>Cancel</button>
-                  </>
-                )}
               </td>
             </tr>
           ))}

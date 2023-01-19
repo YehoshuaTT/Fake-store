@@ -42,10 +42,14 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
   };
 
   const endOfBuyingCycle = async () => {
-    const { data } = await axios.put(
-      `${baseURL}/auth/purchas/${cart_user_id}`,
-      { purchases: cartItem }
-    );
+    const items = cartItem.map((v) => {
+      for (let i = v.amount; i > 0; i--) {
+        return v._id;
+      }
+    });
+    const { data } = await axios.put(`${baseURL}/purchas/${cart_user_id}`, {
+      purchases: items,
+    });
     if (data) {
       alert("your purchaces was sent to delivery");
 

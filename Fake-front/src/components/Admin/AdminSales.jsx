@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import CartTable from "../Table/CartTable";
 function AdminSales() {
   const [carts, setCarts] = useState(null);
@@ -8,18 +7,18 @@ function AdminSales() {
 
   useEffect(() => {
     const getCarts = async () => {
-      const { data } = await axios.get(`${baseURL}/auth/users/carts`);
+      const { data } = await axios.get(`${baseURL}/auth/users`);
+      const sales = data.filter((v) => {
+        return v.purchases.length > 0;
+      });
+      setCarts(sales);
       console.log(data);
-      setCarts(data);
     };
     getCarts();
   }, []);
 
   return (
-    <div className="admin-sales">
-      AdminSales
-      {carts && <CartTable data={carts} />}
-    </div>
+    <div className="admin-sales">{carts && <CartTable data={carts} />}</div>
   );
 }
 

@@ -1,17 +1,18 @@
-const { Schema } = require("mongoose");
-const userSchema = new Schema({
+const mongoose = require("mongoose");
+const purchasesSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
   },
-  products: [],
-  total: {
-    type: Number,
+  products: {
+    type: Array,
+    required: true,
   },
+
   createDate: {
     type: Date,
     default: Date.now,
   },
 });
-
-module.exports = userSchema;
+const purchasestData = mongoose.model("Purchas", purchasesSchema);
+module.exports = purchasestData;
