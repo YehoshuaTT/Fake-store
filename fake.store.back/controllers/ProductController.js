@@ -1,13 +1,19 @@
 const Product = require("../models/product.model");
+const CategoryController = require("../controllers/CategoryController");
 class ProductController {
   static async create(req, res) {
     try {
+      const data = await CategoryController.index(req, res);
+      if (!data.includes(req.body.category)) {
+        let editedReq = req;
+        editedReq.body.title = req.body.category;
+        const newCat = await CategoryController.create(editedReq, res);
+      }
       const newProduct = await Product.create(req.body);
-      console.log(newProduct);
       res.send(newProduct);
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      // res.sendStatus(500);
     }
   }
 

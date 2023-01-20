@@ -8,6 +8,7 @@ class CategoryController {
       let onlyTitles = [];
       allCat.forEach((v) => onlyTitles.push(v._doc.title));
       res.status(200).send(onlyTitles);
+      return onlyTitles;
     } catch (err) {
       console.log(err);
       res.sendStatus(500);
