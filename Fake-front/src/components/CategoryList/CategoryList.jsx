@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 
 function CategoryList({ categories, getCatItems, setShowCat, showCat }) {
   let params = useParams();
+
   return (
     <nav id="category-list">
       {!showCat &&

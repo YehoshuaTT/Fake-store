@@ -1,8 +1,9 @@
 import "./table.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useRef } from "react";
 
-const Table = ({ data }) => {
+const Table = ({ data, newProductState }) => {
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -24,7 +25,7 @@ const Table = ({ data }) => {
   const [tempValues, setTempValues] = useState({});
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState({});
-
+  let photoInput = useRef();
   useEffect(() => {
     const fetchCategorys = async () => {
       const { data } = await axios.get(`${baseURL}/category/all`);
@@ -36,6 +37,13 @@ const Table = ({ data }) => {
   const handleEdit = (index, field) => {
     setTempValues({ ...tempValues, [index]: { ...items[index] } });
     setEditMode({ ...editMode, [index]: field });
+  };
+
+  const handleNewProduct = (e, prop) => {
+    const newItems = product;
+    newItems[prop] = e.target.value;
+    console.log(newItems);
+    setProduct(newItems);
   };
 
   const handleChange = (e, index) => {
@@ -64,6 +72,25 @@ const Table = ({ data }) => {
     // sendUpdate();
   };
 
+  const SendNew = () => {
+    const toUpdate = product;
+    if (!product.category) {
+      alert("no category");
+      return;
+    }
+
+    const options = {
+      method: "PUT",
+      url: `${baseURL}/products'`,
+      data: product,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    console.log("theproduct: ", product);
+    // sendUpdate();
+  };
+
   const handleCancel = (index) => {
     setItems([
       ...items.slice(0, index),
@@ -78,11 +105,12 @@ const Table = ({ data }) => {
     <table id="edit-all-products-table">
       <thead>
         <tr>
-          <>
-            <th>#</th>
-            <th>ID</th>
-          </>
-
+          {!newProductState && (
+            <>
+              <th>#</th>
+              <th>ID</th>
+            </>
+          )}
           <th>image</th>
           <th
             onClick={() => {
@@ -120,7 +148,7 @@ const Table = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {
+        {!newProductState ? (
           <>
             {sortedData.map((item, index) => (
               <tr key={item.id}>
@@ -129,7 +157,7 @@ const Table = ({ data }) => {
                 <td onClick={() => handleEdit(index, "image")}>
                   {editMode[index] === "image" ? (
                     <input
-                      type="text"
+                      type="image"
                       name="image"
                       value={item.image}
                       onChange={(e) => handleChange(e, index)}
@@ -218,7 +246,80 @@ const Table = ({ data }) => {
               </tr>
             ))}
           </>
-        }
+        ) : (
+          <>
+            {
+              <tr key={Math.random()}>
+                <td>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Noun_project_Upload.svg/100px-Noun_project_Upload.svg.png"
+                    type="text"
+                    name="image"
+                    onClick={(e) => {
+                      if (photoInput) photoInput.click();
+                    }}
+                    // handleNewProduct(e, "image")}
+                  />
+                  <input
+                    ref={(input) => (photoInput = input)}
+                    style={{ visibility: "hidden" }}
+                    type="file"
+                    onInput={(e) => console.log(e)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="name"
+                    onChange={(e) => handleNewProduct(e, "name")}
+                    placeholder="Title"
+                  />
+                </td>
+                <td>
+                  <>
+                    <select
+                      type="text"
+                      name="category"
+                      onChange={(e) => handleNewProduct(e, "category")}
+                    >
+                      {categories.map((v) => {
+                        return <option value={v}>{v}</option>;
+                      })}
+                    </select>
+                  </>
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="price"
+                    onChange={(e) => handleNewProduct(e, "price")}
+                    placeholder="price"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="inStock"
+                    onChange={(e) => handleNewProduct(e, "inStock")}
+                  />
+                </td>
+                <td>
+                  <textarea
+                    id="description"
+                    type="text"
+                    name="description"
+                    onChange={(e) => handleNewProduct(e, "description")}
+                  />
+                </td>
+                <td>
+                  <>
+                    <button onClick={() => SendNew()}>Creat</button>
+                  </>
+                </td>
+              </tr>
+            }
+          </>
+        )}
       </tbody>
     </table>
   );

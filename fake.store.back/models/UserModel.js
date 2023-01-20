@@ -32,14 +32,17 @@ class UserClass {
   }
 
   static async index() {
-    const allUsers = await this.find({}).populate({
-      path: "purchases",
-      model: "Purchas",
-      populate: {
-        path: "products",
-        model: "Product",
-      },
-    });
+    const allUsers = await this.find({})
+      .select("-cart -createDate -gender -_v")
+      .populate({
+        path: "purchases",
+        model: "Purchas",
+        populate: {
+          path: "products",
+          model: "Product",
+          select: "price",
+        },
+      });
     return allUsers;
   }
   static async indexWithCarts() {
