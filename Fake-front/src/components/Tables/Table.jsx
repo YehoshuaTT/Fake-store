@@ -18,6 +18,7 @@ const Table = ({ data }) => {
     }
   });
 
+  const baseURL = "http://localhost:3001";
   const [items, setItems] = useState(sortedData);
   const [editMode, setEditMode] = useState({});
   const [tempValues, setTempValues] = useState({});
