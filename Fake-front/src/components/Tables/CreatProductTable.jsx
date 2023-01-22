@@ -1,19 +1,21 @@
 import "./table.css";
+import apiCalls from "../../functions/apiRequest";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useRef } from "react";
 
 const Table = () => {
   const [newCat, setNewCat] = useState(false);
 
-  const baseURL = "http://localhost:3001";
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState({});
+
   let photoInput = useRef();
+
   useEffect(() => {
     const fetchCategorys = async () => {
-      const { data } = await axios.get(`${baseURL}/category/all`);
-      setCategories(data);
+      apiCalls("get", `/category/all`).then(({ data }) => {
+        setCategories(data);
+      });
     };
     fetchCategorys();
   }, []);
@@ -27,8 +29,9 @@ const Table = () => {
 
   const SendNew = async () => {
     console.log("theproduct: ", product);
-    const { data } = await axios.post(`${baseURL}/product`, product);
-    console.log(data);
+    apiCalls("post", `/product`, product).then(({ data }) => {
+      console.log(data);
+    });
   };
 
   return (

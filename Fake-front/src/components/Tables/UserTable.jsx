@@ -1,5 +1,5 @@
 import "./table.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const UserTable = ({ data }) => {
   const [sortBy, setSortBy] = useState("name");

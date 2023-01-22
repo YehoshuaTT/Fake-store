@@ -4,7 +4,10 @@ const User = require("../models/UserModel");
 class CartController {
   static async index(req, res) {
     try {
-      const cart = await Cart.findOne({ id: req.params.user_id }).populate();
+      const cart = await Cart.findOne({ id: req.params.user_id }).populate({
+        path: "products",
+        model: "Product",
+      });
       if (cart) res.send(cart);
       else res.sendStatus(400);
     } catch (e) {

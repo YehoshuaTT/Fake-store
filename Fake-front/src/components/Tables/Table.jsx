@@ -1,6 +1,6 @@
 import "./table.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import apiCalls from "../../functions/apiRequest";
 
 const Table = ({ data }) => {
   const [sortBy, setSortBy] = useState("name");
@@ -18,7 +18,6 @@ const Table = ({ data }) => {
     }
   });
 
-  const baseURL = "http://localhost:3001";
   const [items, setItems] = useState(sortedData);
   const [editMode, setEditMode] = useState({});
   const [tempValues, setTempValues] = useState({});
@@ -27,8 +26,9 @@ const Table = ({ data }) => {
 
   useEffect(() => {
     const fetchCategorys = async () => {
-      const { data } = await axios.get(`${baseURL}/category/all`);
-      setCategories(data);
+      apiCalls("get", `/category/all`).then(({ data }) => {
+        setCategories(data);
+      });
     };
     fetchCategorys();
   }, []);

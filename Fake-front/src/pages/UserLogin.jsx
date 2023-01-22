@@ -1,6 +1,5 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiCalls from "../functions/apiRequest";
 
 function UserLogin({ setCanLog, canLog }) {
   const [currentForm, setCurrentForm] = useState("Login");
@@ -11,8 +10,6 @@ function UserLogin({ setCanLog, canLog }) {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [cannotPress, setCannotPress] = useState(true);
-
-  // const navigate = useNavigate()
 
   const canPrees = () => {
     let user = {
@@ -36,7 +33,6 @@ function UserLogin({ setCanLog, canLog }) {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    const baseUrl = "http://localhost:3001";
 
     if (currentForm === "Register") {
       let user = {
@@ -47,7 +43,9 @@ function UserLogin({ setCanLog, canLog }) {
         gender: gender,
         dob: dob,
       };
-      const { data } = await axios.post(`${baseUrl}/auth/register`, user);
+      const { data } = apiCalls("post", `/auth/register`, user).then(
+        ({ data }) => console.log(data)
+      );
       console.log(data);
       if (data) setCurrentForm("Login");
     } else {
@@ -55,17 +53,20 @@ function UserLogin({ setCanLog, canLog }) {
         email,
         password: pass,
       };
-      const response = await axios.post(`${baseUrl}/auth/login`, user);
-      console.log(response);
-      localStorage.setItem("token", response.data.token);
+      const response = apiCalls("post", `/auth/login`, user).then(
+        (response) => {
+          localStorage.setItem("token", response.data.token);
+          if (response.status == "200") {
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("email", email);
+            localStorage.setItem("id", response.data.id);
+            console.log("great, authenticattion passed");
+            setCanLog(!canLog);
+          }
+        }
+      );
 
-      if (response.status == "200") {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("email", email);
-        localStorage.setItem("id", response.data.id);
-        console.log("great, authenticattion passed");
-        setCanLog(!canLog);
-      }
+      console.log(response);
     }
   };
 
@@ -77,7 +78,6 @@ function UserLogin({ setCanLog, canLog }) {
       <form id="login-form" onSubmit={handelSubmit}>
         {currentForm === "Register" ? (
           <>
-            {" "}
             <label htmlFor="fName">First Name</label>
             <input
               className="login-input"
@@ -164,12 +164,11 @@ function UserLogin({ setCanLog, canLog }) {
                 <option value="male"> male</option>
                 <option value="female"> female</option>
               </select>
-            </div>{" "}
+            </div>
           </>
         ) : null}
         <button id="login-button" disabled={cannotPress}>
-          {" "}
-          {`${currentForm}`}{" "}
+          {`${currentForm}`}
         </button>
       </form>
       {currentForm === "Login" ? (
@@ -178,8 +177,7 @@ function UserLogin({ setCanLog, canLog }) {
             className="reg-log-button"
             onClick={() => setCurrentForm("Register")}
           >
-            {" "}
-            Not registerd? click here{" "}
+            Not registerd? click here
           </button>
         </>
       ) : (
@@ -188,8 +186,7 @@ function UserLogin({ setCanLog, canLog }) {
             className="reg-log-button"
             onClick={() => setCurrentForm("Login")}
           >
-            {" "}
-            Registerd? click to login{" "}
+            Registerd? click to login
           </button>
         </>
       )}

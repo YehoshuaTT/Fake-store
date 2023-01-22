@@ -1,18 +1,18 @@
 import React from "react";
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import apiCalls from "../../functions/apiRequest";
 function Cart({ cartItem, setCartItem, decrease, increase }) {
   const [total, setTotal] = useState(0);
   const [firstTime, setFirstTime] = useState(true);
   const cart_user_id = localStorage.getItem("id");
-  const baseURL = "http://localhost:3001";
 
-  const getTheCart = async () => {
-    const { data } = await axios.get(`${baseURL}/cart/${cart_user_id}`);
-    console.log("data", data);
-    setCartItem(data.products);
-    setFirstTime(false);
+  const getTheCart = () => {
+    apiCalls("get", `/cart/${cart_user_id}`).then(({ data }) => {
+      console.log("data", data);
+      setCartItem(data.products);
+      setFirstTime(false);
+    });
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
       products: [],
       type: "empty",
     };
-    await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
+    apiCalls("post", `/cart/${cart_user_id}`, theCart);
     console.log(cartItem);
   };
 
@@ -47,15 +47,18 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
         return v._id;
       }
     });
-    const { data } = await axios.put(`${baseURL}/purchas/${cart_user_id}`, {
+    apiCalls("put", `/purchas/${cart_user_id}`, {
       purchases: items,
-    });
-    if (data) {
-      alert("your purchaces was sent to delivery");
+    }).then(({ data }) => {
+      if (data) {
+        console.log(data);
+        alert("your purchaces was sent to delivery");
 
-      empy();
-    }
+        empy();
+      }
+    });
   };
+
   return (
     <nav id="cart">
       <div className="cart-top-part">
