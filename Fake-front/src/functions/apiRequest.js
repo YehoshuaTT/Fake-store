@@ -6,9 +6,10 @@ import axios from "axios";
 
 // }
 const baseURL = "http://localhost:3001";
-
 const apiCalls = async (method, url, data) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.token}`;
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    "token"
+  )}`;
   console.log(" +++  \n api call - send ", method, url, data);
   try {
     console.log(axios.defaults);

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function Items({ catItems, increase, decrease, cartItem }) {
   const [added, setAdded] = useState(false);
+
   return (
     <div className="category-name-container">
       <div className="opend-category">

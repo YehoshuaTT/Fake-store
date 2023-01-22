@@ -1,20 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import UserTable from "../components/Tables/UserTable";
+import apiCalls from "../functions/apiRequest";
 
 function AdminUsers() {
   const [users, setUsers] = useState();
+
   useEffect(() => {
     const getUsers = async () => {
-      const { data } = await axios.get("http://localhost:3001/auth/users  ", {
-        headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      console.log(data);
-      setUsers(data);
+      apiCalls("get", "/auth/users").then(({ data }) => setUsers(data));
     };
+
     getUsers();
   }, []);
-
   return (
     <div className="admin-users">
       users

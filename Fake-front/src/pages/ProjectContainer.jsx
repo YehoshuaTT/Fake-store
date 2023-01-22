@@ -1,4 +1,3 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Layout from "./Layout";
 import AdminNav from "../components/AdminNav/AdminNav";
 import Header from "../components/Header/Header";
@@ -6,6 +5,7 @@ import AdminProduct from "./AdminProduct";
 import AdminUsers from "./AdminUsers";
 import AdminSales from "./AdminSales";
 import AdminCreatProduct from "./AdminCreatProduct";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function ProjectContainer({ isAdmin, setCanLog }) {
   return (

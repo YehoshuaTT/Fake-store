@@ -3,9 +3,9 @@ import CategoryList from "../components/CategoryList/CategoryList";
 import SingleItem from "./SingleItem";
 import Items from "./Items";
 import Cart from "../components/Cart/Cart";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, Route, Routes } from "react-router-dom";
+import apiCalls from "../functions/apiRequest";
 
 function Layout({ token }) {
   const [cartItem, setCartItem] = useState([]);
@@ -23,21 +23,14 @@ function Layout({ token }) {
 
   useEffect(() => {
     const fetchCategorys = async () => {
-      const { data } = await axios.get(`${baseURL}/category/all`, {
-        headers: { autherization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      setCategories(data);
+      apiCalls("get", "/category/all").then(({ data }) => setCategories(data));
     };
     fetchCategorys();
   }, []);
 
   const getCategoryItems = async (e) => {
-    console.log(e);
-    const { data: res } = await axios.get(`${baseURL}/product/all/${e}`);
-    const items = res.filter((v) => v.category === e);
-    setCatItems(items);
+    apiCalls("get", `/product/all/${e}`).then(({ data }) => setCatItems(data));
     setCategory(e);
-    console.log(items);
   };
 
   const increase = (e) => {
@@ -73,7 +66,7 @@ function Layout({ token }) {
       type: AddOrRemove,
     };
     console.log(theCart);
-    await axios.post(`${baseURL}/cart/${cart_user_id}`, theCart);
+    apiCalls("post", `/cart/${cart_user_id}`, theCart);
   };
 
   return (
