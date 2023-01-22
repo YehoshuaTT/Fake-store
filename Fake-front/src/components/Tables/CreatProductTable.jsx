@@ -3,22 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRef } from "react";
 
-const Table = ({ data, newProductState }) => {
-  const [sortBy, setSortBy] = useState("title");
-  const [sortOrder, setSortOrder] = useState("asc");
+const Table = () => {
   const [newCat, setNewCat] = useState(false);
-
-  const sortedData = data.sort((a, b, i) => {
-    if (sortBy === "title") {
-      if (a.title < b.title) return sortOrder === "asc" ? -1 : 1;
-      if (a.title > b.title) return sortOrder === "asc" ? 1 : -1;
-      return 0;
-    } else {
-      if (a[sortBy] < b[sortBy]) return sortOrder === "asc" ? -1 : 1;
-      if (a[sortBy] > b[sortBy]) return sortOrder === "asc" ? 1 : -1;
-      return i;
-    }
-  });
 
   const baseURL = "http://localhost:3001";
   const [categories, setCategories] = useState([]);
@@ -50,38 +36,10 @@ const Table = ({ data, newProductState }) => {
       <thead>
         <tr>
           <th>image</th>
-          <th
-            onClick={() => {
-              setSortBy("title");
-              setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-            }}
-          >
-            Title
-          </th>
-          <th
-            onClick={() => {
-              setSortBy("category");
-              setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-            }}
-          >
-            Category
-          </th>
-          <th
-            onClick={() => {
-              setSortBy("price");
-              setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-            }}
-          >
-            Price
-          </th>
-          <th
-            onClick={() => {
-              setSortBy("instock");
-              setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-            }}
-          >
-            In Stock
-          </th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>In Stock</th>
           <th>description</th>
         </tr>
       </thead>
@@ -168,9 +126,7 @@ const Table = ({ data, newProductState }) => {
                   />
                 </td>
                 <td>
-                  <>
-                    <button onClick={() => SendNew()}>Creat</button>
-                  </>
+                  <button onClick={() => SendNew()}>Creat</button>
                 </td>
               </tr>
             }

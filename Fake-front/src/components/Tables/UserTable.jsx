@@ -6,8 +6,6 @@ const UserTable = ({ data }) => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [editMode, setEditMode] = useState({});
   const [tempValues, setTempValues] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [product, setProduct] = useState({});
   const baseURL = "http://localhost:3001";
 
   const sortedData =

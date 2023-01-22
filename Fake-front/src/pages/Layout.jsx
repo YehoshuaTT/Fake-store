@@ -1,19 +1,26 @@
-import "./style.css";
-import CategoryList from "../CategoryList/CategoryList";
-import SingleItem from "../SingleItem/SingleItem";
-import Items from "../Items/Items";
-import Cart from "../Cart/Cart";
+import "../styels/style.css";
+import CategoryList from "../components/CategoryList/CategoryList";
+import SingleItem from "./SingleItem";
+import Items from "./Items";
+import Cart from "../components/Cart/Cart";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, Route, Routes } from "react-router-dom";
 
-function Layout({ token, showCat, setShowCat }) {
+function Layout({ token }) {
   const [cartItem, setCartItem] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(null);
   const [catItems, setCatItems] = useState([]);
+  const [showCat, setShowCat] = useState(true);
+
   const cart_user_id = localStorage.getItem("id");
   const baseURL = "http://localhost:3001";
+
+  useEffect(() => {
+    setShowCat(true);
+  }, []);
+
   useEffect(() => {
     const fetchCategorys = async () => {
       const { data } = await axios.get(`${baseURL}/category/all`, {

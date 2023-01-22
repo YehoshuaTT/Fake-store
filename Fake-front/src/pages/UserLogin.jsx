@@ -24,12 +24,12 @@ function UserLogin({ setCanLog, canLog }) {
       dob: dob,
     };
 
-    if (currentForm == "Login") {
-      if (user.email == email && user.password == pass) setCannotPress(false);
+    if (currentForm === "Login") {
+      if (user.email === email && user.password == pass) setCannotPress(false);
     } else {
       for (let i = 0; i < Object.keys(user).length; i++) {
-        if (user[Object.keys(user)[i]] == "") break;
-        if (i == Object.keys(user).length - 1) setCannotPress(false);
+        if (user[Object.keys(user)[i]] === "") break;
+        if (i === Object.keys(user).length - 1) setCannotPress(false);
       }
     }
   };

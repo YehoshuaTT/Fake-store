@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import CartTable from "../Table/CartTable";
+import CartTable from "../components/Tables/CartTable";
 function AdminSales() {
   const [carts, setCarts] = useState(null);
   const baseURL = "http://localhost:3001";

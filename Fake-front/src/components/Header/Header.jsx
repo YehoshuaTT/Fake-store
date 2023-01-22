@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-function Header({ setShowCat, setCanLog }) {
+function Header({ setCanLog }) {
   const logout = () => {
     localStorage.setItem("id", null);
     localStorage.setItem("email", null);
@@ -14,9 +14,7 @@ function Header({ setShowCat, setCanLog }) {
     <div id="header">
       <h2>Fake - But realistic store </h2>
       <nav className="paging-links">
-        <Link to="/layout" onClick={() => setShowCat(true)}>
-          Home
-        </Link>
+        <Link to="/layout">Home</Link>
         <Link to="/">Admin</Link>
         <Link to="/" onClick={() => logout()}>
           Logout

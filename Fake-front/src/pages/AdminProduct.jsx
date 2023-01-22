@@ -1,28 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Table from "../Table/Table";
-import SearchEng from "./SearchEng";
+import Table from "../components/Tables/Table";
+import apiCalls from "../functions/apiRequest";
 
 function AdminProduct() {
   const baseURL = "http://localhost:3001";
 
   const [prods, setProds] = useState();
-  const getAllproducts = async () => {
-    const { data } = await axios.get(`${baseURL}/product/all/`);
-    setProds(data);
-    console.log(prods);
-  };
+
+  // apiCalls (".get", "/product/all/")
+  // const getAllproducts = async () => {
+  //   const { data } = await axios.get(`${baseURL}/product/all/`);
+  // };
 
   useEffect(() => {
-    getAllproducts();
+    const data = apiCalls("get", "/product/all/").then(({ data }) =>
+      setProds(data)
+    );
   }, []);
-
-  console.log(prods);
 
   return (
     <div className="admin-update">
       <div className="get-pruduct"></div>
-      <SearchEng props={prods} />
       {prods && <Table data={prods} />}
     </div>
   );

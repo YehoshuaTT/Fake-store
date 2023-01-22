@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import UserTable from "../Table/UserTable";
+import UserTable from "../Tables/UserTable";
 
 function AdminUsers() {
   const [users, setUsers] = useState();
