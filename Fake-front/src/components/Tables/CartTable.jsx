@@ -61,7 +61,7 @@ const Table = ({ data }) => {
       <tbody>
         <>
           {sortedData.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={index + Math.random()}>
               <td>({index + 1})</td>
 
               <td>{item.fName + " " + item.lName}</td>

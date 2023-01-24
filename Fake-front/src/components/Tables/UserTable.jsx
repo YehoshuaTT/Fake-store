@@ -65,9 +65,6 @@ const UserTable = ({ data }) => {
     setTempValues({ ...tempValues, [index]: null });
   };
 
-  const handleCart = () => {
-    return;
-  };
   return (
     <table id="edit-all-products-table">
       <thead>
@@ -100,7 +97,7 @@ const UserTable = ({ data }) => {
       <tbody>
         <>
           {sortedData.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={index + Math.random()}>
               <td>({index + 1})</td>
 
               <td onClick={() => handleEdit(index, "name")}>
