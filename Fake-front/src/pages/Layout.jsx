@@ -15,7 +15,6 @@ function Layout({ token }) {
   const [showCat, setShowCat] = useState(true);
 
   const cart_user_id = localStorage.getItem("id");
-  const baseURL = "http://localhost:3001";
 
   useEffect(() => {
     setShowCat(true);
@@ -106,7 +105,7 @@ function Layout({ token }) {
         <Routes>
           <Route
             path="/single-item/:itemID"
-            element={<SingleItem addToCart={increase} cartItem={cartItem} />}
+            element={<SingleItem props={{ increase, cartItem }} />}
           />
           <Route
             path="/:category"

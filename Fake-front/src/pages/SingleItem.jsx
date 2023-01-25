@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import apiCalls from "../functions/apiRequest";
-function SingleItem({ addToCart }) {
+function SingleItem({ increase }) {
   const [item, setItem] = useState([]);
 
   const param = useParams();
@@ -22,7 +22,7 @@ function SingleItem({ addToCart }) {
         <img className="single-img" src={item.image}></img>
         <div className="single-title">{item.title}</div>
         <div>
-          <button className="ATC-bottun" onClick={() => addToCart(item)}>
+          <button className="ATC-bottun" onClick={() => increase(item)}>
             Add to Cart
           </button>
         </div>

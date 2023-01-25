@@ -1,18 +1,19 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import CartTable from "../components/Tables/CartTable";
+import apiCalls from "../functions/apiRequest";
 function AdminSales() {
   const [carts, setCarts] = useState(null);
-  const baseURL = "http://localhost:3001";
 
   useEffect(() => {
     const getCarts = async () => {
-      const { data } = await axios.get(`${baseURL}/auth/users`);
-      const sales = data.filter((v) => {
-        return v.purchases.length > 0;
+      apiCalls("get", "/auth/users").then(({ data }) => {
+        const sales = data.filter((v) => {
+          return v.purchases.length > 0;
+        });
+        setCarts(sales);
+        console.log(data);
       });
-      setCarts(sales);
-      console.log(data);
     };
     getCarts();
   }, []);
