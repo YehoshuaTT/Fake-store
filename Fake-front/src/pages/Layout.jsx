@@ -32,41 +32,41 @@ function Layout({ token }) {
     setCategory(e);
   };
 
-  const increase = (e) => {
-    sendCartToDB(e._id, "add");
-    let allItems = [...cartItem];
-    const todo = allItems.findIndex((i) => i._id === e._id);
-    if (todo === -1) allItems.push(e);
-    else ++allItems[todo].amount;
+  // const increase = (e) => {
+  //   sendCartToDB(e._id, "add");
+  //   let allItems = [...cartItem];
+  //   const todo = allItems.findIndex((i) => i._id === e._id);
+  //   if (todo === -1) allItems.push(e);
+  //   else ++allItems[todo].amount;
 
-    setCartItem(allItems);
-  };
+  //   setCartItem(allItems);
+  // };
 
-  const decrease = (item, amount) => {
-    sendCartToDB(item._id, "remove");
-    const id = cartItem.findIndex((v) => v._id === item._id);
-    if (id == -1) return;
-    if (amount === 1) {
-      let toBeChange = [...cartItem];
-      toBeChange.splice(id, 1);
-      setCartItem(toBeChange);
-    } else {
-      item.amount = amount - 1;
-      let toBeChange = [...cartItem];
-      toBeChange[id] = item;
-      setCartItem(toBeChange);
-    }
-  };
+  // const decrease = (item, amount) => {
+  //   sendCartToDB(item._id, "remove");
+  //   const id = cartItem.findIndex((v) => v._id === item._id);
+  //   if (id == -1) return;
+  //   if (amount === 1) {
+  //     let toBeChange = [...cartItem];
+  //     toBeChange.splice(id, 1);
+  //     setCartItem(toBeChange);
+  //   } else {
+  //     item.amount = amount - 1;
+  //     let toBeChange = [...cartItem];
+  //     toBeChange[id] = item;
+  //     setCartItem(toBeChange);
+  //   }
+  // };
 
-  const sendCartToDB = async (product, AddOrRemove) => {
-    const theCart = {
-      id: cart_user_id,
-      products: product,
-      type: AddOrRemove,
-    };
-    console.log(theCart);
-    apiCalls("post", `/cart/${cart_user_id}`, theCart);
-  };
+  // const sendCartToDB = async (product, AddOrRemove) => {
+  //   const theCart = {
+  //     id: cart_user_id,
+  //     products: product,
+  //     type: AddOrRemove,
+  //   };
+  //   console.log(theCart);
+  //   apiCalls("post", `/cart/${cart_user_id}`, theCart);
+  // };
 
   return (
     <div className="main-container">
@@ -74,8 +74,8 @@ function Layout({ token }) {
         cartItem={cartItem}
         setCartItem={setCartItem}
         token={token}
-        increase={increase}
-        decrease={decrease}
+        // increase={increase}
+        // decrease={decrease}
       />
       <div className="cat-and-drop-container ">
         <CategoryList
@@ -105,19 +105,19 @@ function Layout({ token }) {
         <Routes>
           <Route
             path="/single-item/:itemID"
-            element={<SingleItem props={{ increase, cartItem }} />}
+            element={<SingleItem props={{ cartItem }} />}
           />
           <Route
             path="/:category"
             element={
               <Items
                 category={category}
-                increase={increase}
+                // increase={increase}
                 catItems={catItems}
                 getCatItems={getCategoryItems}
                 cartItem={cartItem}
                 setCartItem={setCartItem}
-                decrease={decrease}
+                // decrease={decrease}
               />
             }
           />

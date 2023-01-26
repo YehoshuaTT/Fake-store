@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import apiCalls from "../functions/apiRequest";
-function SingleItem({ increase }) {
+import fakestore from "../stores/main";
+import { observer } from "mobx-react";
+
+function SingleItem({}) {
+  const { increase } = fakestore;
   const [item, setItem] = useState([]);
 
   const param = useParams();
@@ -33,4 +37,4 @@ function SingleItem({ increase }) {
   );
 }
 
-export default SingleItem;
+export default observer(SingleItem);

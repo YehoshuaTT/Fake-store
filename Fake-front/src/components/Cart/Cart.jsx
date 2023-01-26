@@ -1,12 +1,13 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { observer } from "mobx-react";
+import { useEffect, useState } from "react";
 import apiCalls from "../../functions/apiRequest";
-function Cart({ cartItem, setCartItem, decrease, increase }) {
+import fakestore from "../../stores/main";
+
+function Cart({ setCartItem, decrease, increase }) {
+  const { cartItem } = fakestore;
   const [total, setTotal] = useState(0);
   const [firstTime, setFirstTime] = useState(true);
   const cart_user_id = localStorage.getItem("id");
-
   const getTheCart = () => {
     apiCalls("get", `/cart/${cart_user_id}`).then(({ data }) => {
       console.log("data", data);
@@ -111,4 +112,4 @@ function Cart({ cartItem, setCartItem, decrease, increase }) {
   );
 }
 
-export default Cart;
+export default observer(Cart);

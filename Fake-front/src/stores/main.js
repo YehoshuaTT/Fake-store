@@ -1,4 +1,4 @@
-import FakeStoreDataStore from "./contectManeger";
+import FakeStoreDataStore from "./ContectManeger";
 
 const fakestore = new FakeStoreDataStore();
 
