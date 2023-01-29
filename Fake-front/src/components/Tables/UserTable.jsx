@@ -6,7 +6,6 @@ const UserTable = ({ data }) => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [editMode, setEditMode] = useState({});
   const [tempValues, setTempValues] = useState({});
-  const baseURL = "http://localhost:3001";
 
   const sortedData =
     data &&
@@ -43,14 +42,14 @@ const UserTable = ({ data }) => {
     ]);
     setEditMode({ ...editMode, [index]: null });
     setTempValues({ ...tempValues, [index]: null });
-    const options = {
-      method: "PUT",
-      url: `${baseURL}/products'`,
-      data: items[index],
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    // const options = {
+    //   method: "PUT",
+    //   url: `${baseURL}/products'`,
+    //   data: items[index],
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
     console.log("theprodect: ", items[index]);
     // sendUpdate();
   };

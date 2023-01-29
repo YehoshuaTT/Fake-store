@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import UserTable from "../components/Tables/UserTable";
 import apiCalls from "../functions/apiRequest";

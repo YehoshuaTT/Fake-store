@@ -18,12 +18,10 @@ const Table = ({ data }) => {
     }
   });
 
-  const baseURL = "http://localhost:3001";
   const [items, setItems] = useState(sortedData);
   const [editMode, setEditMode] = useState({});
   const [tempValues, setTempValues] = useState({});
   const [categories, setCategories] = useState([]);
-  const [product, setProduct] = useState({});
 
   useEffect(() => {
     const fetchCategorys = async () => {
@@ -53,14 +51,14 @@ const Table = ({ data }) => {
     ]);
     setEditMode({ ...editMode, [index]: null });
     setTempValues({ ...tempValues, [index]: null });
-    const options = {
-      method: "PUT",
-      url: `${baseURL}/products'`,
-      data: items[index],
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    // const options = {
+    //   method: "PUT",
+    //   url: `${baseURL}/products'`,
+    //   data: items[index],
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
     console.log("theprodect: ", items[index]);
     // sendUpdate();
   };
@@ -131,7 +129,7 @@ const Table = ({ data }) => {
                       onChange={(e) => handleChange(e, index)}
                     />
                   ) : (
-                    <img src={item.image} width="30px"></img>
+                    <img src={item.image} width="30px" alt="product"></img>
                   )}
                 </td>
                 <td onClick={() => handleEdit(index, "name")}>

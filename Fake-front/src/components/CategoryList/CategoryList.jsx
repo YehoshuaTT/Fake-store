@@ -10,7 +10,7 @@ function CategoryList({ categories, getCatItems, setShowCat, showCat }) {
           <Link to={`/layout/${cat}`} key={i}>
             <div
               className={
-                Object.values(params)[0] == cat
+                Object.values(params)[0] === cat
                   ? "colored-category"
                   : "category"
               }

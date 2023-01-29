@@ -3,24 +3,40 @@ import apiCalls from "../functions/apiRequest";
 
 class FakeStoreDataStore {
   cartItem;
-  showCat;
-
+  canLog;
+  isAdmin;
+  categoryItems;
+  token;
+  cart_user_id;
   constructor() {
     this.cartItem = [];
-    this.showCat = true;
+    this.canLog = false;
+    this.isAdmin = true;
+    this.categoryItems = [];
+    this.token = localStorage.getItem("token");
+    this.cart_user_id = localStorage.getItem("id");
     makeAutoObservable(this);
   }
   allProducts() {}
-  categoryNames() {}
+
   itemesByCategory() {}
   userInfo() {}
-  cart_user_id = localStorage.getItem("id");
 
   sendCartToDB = async (product, AddOrRemove) => {
     const theCart = {
       id: this.cart_user_id,
       products: product,
       type: AddOrRemove,
+    };
+    apiCalls("post", `/cart/${this.cart_user_id}`, theCart);
+  };
+
+  empy = async () => {
+    this.setCartItem([]);
+    const theCart = {
+      id: this.cart_user_id,
+      products: [],
+      type: "empty",
     };
     apiCalls("post", `/cart/${this.cart_user_id}`, theCart);
   };
@@ -53,17 +69,21 @@ class FakeStoreDataStore {
   setCartItem = (e) => {
     this.cartItem = e;
   };
-  canLog = [false];
+
   setCanLog(e) {
     this.canLog = e;
   }
-  isAdmin = [false];
+
   setIsAdmin(e) {
     this.isAdmin = e;
   }
 
   setShowCat(e) {
     this.showCat = e;
+  }
+
+  setCatItems(e) {
+    this.categoryItems = [e];
   }
 }
 

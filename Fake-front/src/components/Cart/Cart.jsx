@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import apiCalls from "../../functions/apiRequest";
 import fakestore from "../../stores/main";
 
-function Cart({ setCartItem, decrease, increase }) {
-  const cartItem = fakestore.cartItem;
+function Cart() {
   const [total, setTotal] = useState(0);
   const [firstTime, setFirstTime] = useState(true);
-  const cart_user_id = localStorage.getItem("id");
+
+  const { cartItem, cart_user_id, decrease, increase, setCartItem, empy } =
+    fakestore;
+
   const getTheCart = () => {
     apiCalls("get", `/cart/${cart_user_id}`).then(({ data }) => {
       console.log("data", data);
@@ -25,29 +27,19 @@ function Cart({ setCartItem, decrease, increase }) {
       setTotal(calc);
     };
     updateTotal();
-  }, [cartItem.length > 0 && cartItem]);
-
-  const empy = async () => {
-    const removingProcess = [...cartItem].forEach((v) => {
-      v.amount = 1;
-    });
-    setCartItem([removingProcess]);
-    setCartItem([]);
-    const theCart = {
-      id: cart_user_id,
-      products: [],
-      type: "empty",
-    };
-    apiCalls("post", `/cart/${cart_user_id}`, theCart);
-    console.log(cartItem);
-  };
+  }, [cartItem]);
 
   const endOfBuyingCycle = async () => {
-    const items = cartItem.map((v) => {
+    const items1 = cartItem.map((v) => {
+      let double = [];
       for (let i = v.amount; i > 0; i--) {
-        return v._id;
+        double.push(v._id);
       }
+      return double;
     });
+
+    let items = items1.flat();
+    console.log(items);
     apiCalls("put", `/purchas/${cart_user_id}`, {
       purchases: items,
     }).then(({ data }) => {
@@ -65,7 +57,7 @@ function Cart({ setCartItem, decrease, increase }) {
       <div className="cart-top-part">
         <h3>Cart: {cartItem.length} items </h3>
         <h3>Total {total.toFixed(2)} $</h3>
-        {cartItem.length == 0 && firstTime ? (
+        {cartItem.length === 0 && firstTime ? (
           <button className="empty" onClick={() => getTheCart()}>
             click for your cart items
           </button>
@@ -81,7 +73,12 @@ function Cart({ setCartItem, decrease, increase }) {
         {cartItem.map((i, i2) => {
           return (
             <div className="cart-items" key={i2}>
-              <img className="img-in-cart" src={i.image} width="40px"></img>
+              <img
+                className="img-in-cart"
+                src={i.image}
+                width="40px"
+                alt={i.title}
+              ></img>
               <>
                 <div className="cart-title">{`${i.title
                   .split(" ", 4)
@@ -92,12 +89,14 @@ function Cart({ setCartItem, decrease, increase }) {
               </>
               <div className="cart-buttons">
                 <img
+                  alt="plus"
                   src="https://findicons.com/files/icons/1014/ivista/128/plus.png"
                   className="inc-dec"
                   onClick={() => increase(i, i.amount)}
                 />
                 {cartItem[i2].amount}
                 <img
+                  alt="minus"
                   src="https://findicons.com/files/icons/1014/ivista/128/minus.png"
                   className="inc-dec"
                   onClick={() => decrease(i, i.amount)}

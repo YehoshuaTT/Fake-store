@@ -6,9 +6,7 @@ function AdminProduct() {
   const [prods, setProds] = useState();
 
   useEffect(() => {
-    const data = apiCalls("get", "/product/all/").then(({ data }) =>
-      setProds(data)
-    );
+    apiCalls("get", "/product/all/").then(({ data }) => setProds(data));
   }, []);
 
   return (

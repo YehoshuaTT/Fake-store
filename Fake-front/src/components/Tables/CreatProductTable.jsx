@@ -53,6 +53,7 @@ const Table = () => {
               <tr key={Math.random()}>
                 <td>
                   <img
+                    alt="product"
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Noun_project_Upload.svg/100px-Noun_project_Upload.svg.png"
                     type="text"
                     name="image"
@@ -81,7 +82,7 @@ const Table = () => {
                       type="text"
                       name="category"
                       onChange={(e) => {
-                        if (e.target.value == "New Category") {
+                        if (e.target.value === "New Category") {
                           setNewCat(true);
                         } else {
                           setNewCat(false);

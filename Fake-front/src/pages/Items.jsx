@@ -13,6 +13,7 @@ function Items({ catItems }) {
             <div className="item-in-category" key={i + Math.random()}>
               <Link to={`/layout/single-item/${v._id}`} className="link">
                 <img
+                  alt={v.title}
                   className="img-in-category"
                   src={v.image}
                   hight="200px"
@@ -23,14 +24,21 @@ function Items({ catItems }) {
                 <div className="buttons-in-item">
                   <img
                     src="https://findicons.com/files/icons/1014/ivista/128/plus.png"
+                    alt="plus"
                     className="inc-dec-category"
                     onClick={() => increase(v)}
                   />
-                  {catItems[i].amount}
+                  {cartItem.find((item) => item.id === v.id).amount}
                   <img
+                    alt="minus"
                     src="https://findicons.com/files/icons/1014/ivista/128/minus.png"
                     className="inc-dec-category"
-                    onClick={() => decrease(v, v.amount)}
+                    onClick={() =>
+                      decrease(
+                        v,
+                        cartItem.find((item) => item.id === v.id).amount
+                      )
+                    }
                   />
                 </div>
               ) : (

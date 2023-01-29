@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import CartTable from "../components/Tables/CartTable";
 import apiCalls from "../functions/apiRequest";

@@ -17,8 +17,6 @@ const Table = ({ data }) => {
     }
   });
 
-  const baseURL = "http://localhost:3001";
-
   return (
     <table id="edit-all-products-table">
       <thead>
