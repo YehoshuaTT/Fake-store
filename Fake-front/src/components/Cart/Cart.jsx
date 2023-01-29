@@ -4,7 +4,7 @@ import apiCalls from "../../functions/apiRequest";
 import fakestore from "../../stores/main";
 
 function Cart({ setCartItem, decrease, increase }) {
-  const { cartItem } = fakestore;
+  const cartItem = fakestore.cartItem;
   const [total, setTotal] = useState(0);
   const [firstTime, setFirstTime] = useState(true);
   const cart_user_id = localStorage.getItem("id");

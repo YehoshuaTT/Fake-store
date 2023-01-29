@@ -1,21 +1,17 @@
-import { useState } from "react";
+import { observer } from "mobx-react-lite";
 import { React } from "react";
 import { Link } from "react-router-dom";
+import fakestore from "../stores/main";
 
-function Items({ catItems, increase, decrease, cartItem }) {
-  const [added, setAdded] = useState(false);
-
+function Items({ catItems }) {
+  const { increase, decrease, cartItem } = fakestore;
   return (
     <div className="category-name-container">
       <div className="opend-category">
         {catItems.map((v, i) => {
           return (
-            <div className="item-in-category">
-              <Link
-                to={`/layout/single-item/${v._id}`}
-                key={i}
-                className="link"
-              >
+            <div className="item-in-category" key={i + Math.random()}>
+              <Link to={`/layout/single-item/${v._id}`} className="link">
                 <img
                   className="img-in-category"
                   src={v.image}
@@ -23,7 +19,7 @@ function Items({ catItems, increase, decrease, cartItem }) {
                 ></img>
               </Link>
               <div className="price">{v.price} $</div>
-              {cartItem.includes(v) ? (
+              {cartItem.find((item) => item.id === v.id) ? (
                 <div className="buttons-in-item">
                   <img
                     src="https://findicons.com/files/icons/1014/ivista/128/plus.png"
@@ -42,7 +38,6 @@ function Items({ catItems, increase, decrease, cartItem }) {
                   className="ATC-bottun"
                   onClick={() => {
                     increase(v);
-                    setAdded(true);
                   }}
                 >
                   Add to Cart
@@ -57,4 +52,4 @@ function Items({ catItems, increase, decrease, cartItem }) {
   );
 }
 
-export default Items;
+export default observer(Items);

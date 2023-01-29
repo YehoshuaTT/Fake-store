@@ -79,11 +79,7 @@ const Table = ({ data }) => {
     <table id="edit-all-products-table">
       <thead>
         <tr>
-          <>
-            <th>#</th>
-            <th>ID</th>
-          </>
-
+          <th>#</th>
           <th>image</th>
           <th
             onClick={() => {
@@ -126,7 +122,6 @@ const Table = ({ data }) => {
             {sortedData.map((item, index) => (
               <tr key={item.id}>
                 <td>({index + 1})</td>
-                <td>{item.id}</td>
                 <td onClick={() => handleEdit(index, "image")}>
                   {editMode[index] === "image" ? (
                     <input

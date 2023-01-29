@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 function Admin() {
   return (
     <div className="admin-nav-bar-container">

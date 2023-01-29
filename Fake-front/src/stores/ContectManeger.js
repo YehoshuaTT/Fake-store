@@ -3,8 +3,11 @@ import apiCalls from "../functions/apiRequest";
 
 class FakeStoreDataStore {
   cartItem;
+  showCat;
+
   constructor() {
     this.cartItem = [];
+    this.showCat = true;
     makeAutoObservable(this);
   }
   allProducts() {}
@@ -12,6 +15,7 @@ class FakeStoreDataStore {
   itemesByCategory() {}
   userInfo() {}
   cart_user_id = localStorage.getItem("id");
+
   sendCartToDB = async (product, AddOrRemove) => {
     const theCart = {
       id: this.cart_user_id,
@@ -34,7 +38,7 @@ class FakeStoreDataStore {
   decrease = (item, amount) => {
     this.sendCartToDB(item._id, "remove");
     const id = this.cartItem.findIndex((v) => v._id === item._id);
-    if (id == -1) return;
+    if (id === -1) return;
     if (amount === 1) {
       let toBeChange = [...this.cartItem];
       toBeChange.splice(id, 1);
@@ -46,10 +50,9 @@ class FakeStoreDataStore {
       this.setCartItem(toBeChange);
     }
   };
-  // cartItem = [];
-  setCartItem(e) {
-    this.cartItems = e;
-  }
+  setCartItem = (e) => {
+    this.cartItem = e;
+  };
   canLog = [false];
   setCanLog(e) {
     this.canLog = e;
@@ -59,7 +62,6 @@ class FakeStoreDataStore {
     this.isAdmin = e;
   }
 
-  showCat = [true];
   setShowCat(e) {
     this.showCat = e;
   }
