@@ -92,7 +92,11 @@ const Table = () => {
                     >
                       <option>Select</option>
                       {categories.map((v) => {
-                        return <option value={v}>{v}</option>;
+                        return (
+                          <option key={Math.random()} value={v}>
+                            {v}
+                          </option>
+                        );
                       })}
                       <option>New Category</option>
                     </select>

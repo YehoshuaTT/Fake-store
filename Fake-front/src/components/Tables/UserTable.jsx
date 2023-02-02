@@ -87,7 +87,8 @@ const UserTable = ({ data }) => {
           </th>
           <th>Email</th>
           <th>Date Of Birth</th>
-          <th>Password</th>
+
+          <th className="user-password">Password</th>
           <th>Permission</th>
           <th>Purchases</th>
           {editMode[0] && <th>edit</th>}
@@ -147,7 +148,10 @@ const UserTable = ({ data }) => {
                   item.dob.slice(0, 10)
                 )}
               </td>
-              <td onClick={() => handleEdit(index, "password")}>
+              <td
+                className="user-password"
+                onClick={() => handleEdit(index, "password")}
+              >
                 {editMode[index] === "password" ? (
                   <input
                     type="text"

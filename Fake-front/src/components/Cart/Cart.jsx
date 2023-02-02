@@ -79,14 +79,14 @@ function Cart() {
                 width="40px"
                 alt={i.title}
               ></img>
-              <>
+              <div className="text-in-cart-item">
                 <div className="cart-title">{`${i.title
                   .split(" ", 4)
                   .join(" ")}...`}</div>
                 <div className="cart-price">{`price: ${(
                   i.price * i.amount
                 ).toFixed(2)} $`}</div>
-              </>
+              </div>
               <div className="cart-buttons">
                 <img
                   alt="plus"
@@ -106,7 +106,9 @@ function Cart() {
           );
         })}
       </div>
-      <button onClick={() => endOfBuyingCycle()}>Buy</button>
+      <button onClick={() => endOfBuyingCycle()} id="buy-button">
+        Buy
+      </button>
     </nav>
   );
 }

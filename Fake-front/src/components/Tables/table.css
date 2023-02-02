@@ -13,3 +13,8 @@ td {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.user-password {
+  max-width: 200px;
+  overflow-x: hidden;
+}

@@ -3,24 +3,20 @@ import apiCalls from "../functions/apiRequest";
 
 class FakeStoreDataStore {
   cartItem;
-  canLog;
-  isAdmin;
   categoryItems;
   token;
   cart_user_id;
   constructor() {
     this.cartItem = [];
-    this.canLog = false;
-    this.isAdmin = true;
     this.categoryItems = [];
     this.token = localStorage.getItem("token");
     this.cart_user_id = localStorage.getItem("id");
     makeAutoObservable(this);
   }
+
   allProducts() {}
 
   itemesByCategory() {}
-  userInfo() {}
 
   sendCartToDB = async (product, AddOrRemove) => {
     const theCart = {
@@ -74,29 +70,9 @@ class FakeStoreDataStore {
     this.canLog = e;
   }
 
-  setIsAdmin(e) {
-    this.isAdmin = e;
-  }
-
-  setShowCat(e) {
-    this.showCat = e;
-  }
-
   setCatItems(e) {
     this.categoryItems = [e];
   }
 }
 
 export default FakeStoreDataStore;
-
-// //DO NOT defined method with arrow when you NOT destrucr it at the components:
-// //see example in "Input" component
-// addTodo(text) {
-//   this.todos.push(text);
-// }
-
-// //DO defined method with arrow when you destrucr it at the components:
-// //see example in "Todo" component
-// delTodo = (id) => {
-//   this.todos = this.todos.filter((v, i) => i !== id);
-// };

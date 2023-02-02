@@ -14,7 +14,7 @@ function Header({ setCanLog }) {
       <h2>Fake - But realistic store </h2>
       <nav className="paging-links">
         <Link to="/layout">Home</Link>
-        <Link to="/">Admin</Link>
+        <Link to="/adminproducts">Admin</Link>
         <Link to="/" onClick={() => logout()}>
           Logout
         </Link>
