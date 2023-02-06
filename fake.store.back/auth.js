@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { errMessage } = require("./errController");
 require("dotenv");
 const secret = process.env.SECRET;
 const creatToken = async (data) => {
@@ -6,16 +7,14 @@ const creatToken = async (data) => {
 };
 
 const validToken = async (req, res, next) => {
-  console.log("im in", req.headers);
+  let data = req.headers.authorization.replace("Bearer ", "");
   try {
-    let data = req.headers.autherization.replace("Bearer ", "");
-    console.log("data:    ", data);
     const result = jwt.verify(data, secret);
-    console.log("result:    ", result);
+
     res.status(201);
     next();
-  } catch (err) {
-    res.status(401).send("you are unauthorized to enter");
+  } catch (error) {
+    console.log(errMessage.UNAUTHORIZED);
   }
 };
 

@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
 const CategoryController = require("../controllers/CategoryController");
+const { errMessage } = require("../errController");
 class ProductController {
   static async create(req, res) {
     try {
@@ -39,12 +40,9 @@ class ProductController {
   }
 
   static async catProducts(req, res) {
-    try {
-      const product = await Product.find({ category: req.params.catName });
-      res.send(product);
-    } catch (e) {
-      res.sendStatus(500);
-    }
+    const product = await Product.find({ category: req.params.catName });
+    if (!product) throw errMessage.INTERNAL_ERROR;
+    res.send(product);
   }
 
   static async update(req, res) {
