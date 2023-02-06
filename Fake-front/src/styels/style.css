@@ -292,7 +292,7 @@ ul {
   width: 100%;
   aspect-ratio: 3;
   border-bottom: grey 2px solid;
-  padding-top: 5%;
+  /* padding-top: 5%; */
   flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
@@ -301,6 +301,7 @@ ul {
 .img-in-cart {
   margin: 1%;
   width: 25%;
+  max-height: 70%;
 }
 .cart-buttons {
   display: flex;

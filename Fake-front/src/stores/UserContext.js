@@ -25,6 +25,17 @@ class UsersDataStore {
   setIsAdmin(e) {
     this.isAdmin = e;
   }
+  setAllUsers(e) {
+    this.allUsers = e;
+  }
+  setCarts(e) {
+    this.carts = e;
+  }
+  // userPurchases = async () => {
+  //   const data = apiCalls("get", `/purchas/${this.cart_user_id}`);
+  //   console.log(data);
+  //   return data;
+  // };
 }
 
 export default UsersDataStore;

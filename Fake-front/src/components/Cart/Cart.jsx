@@ -1,14 +1,16 @@
 import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
 import apiCalls from "../../functions/apiRequest";
-import fakestore from "../../stores/main";
+import main from "../../stores/main";
+const { productsData } = main;
+console.log("dsfsd*******", productsData);
 
 function Cart() {
   const [total, setTotal] = useState(0);
   const [firstTime, setFirstTime] = useState(true);
 
   const { cartItem, cart_user_id, decrease, increase, setCartItem, empy } =
-    fakestore;
+    productsData;
 
   const getTheCart = () => {
     apiCalls("get", `/cart/${cart_user_id}`).then(({ data }) => {

@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { React } from "react";
 import { Link } from "react-router-dom";
-import fakestore from "../stores/main";
+import main from "../stores/main";
+const { productsData } = main;
 
 function Items({ catItems }) {
-  const { increase, decrease, cartItem } = fakestore;
+  const { increase, decrease, cartItem } = productsData;
   return (
     <div className="category-name-container">
       <div className="opend-category">

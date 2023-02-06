@@ -66,6 +66,7 @@ const Table = ({ data }) => {
               <td>{item.email}</td>
 
               <td>{item.purchases.length}</td>
+
               <td>
                 {`${sortedData
                   .flatMap((v) => v.purchases)
