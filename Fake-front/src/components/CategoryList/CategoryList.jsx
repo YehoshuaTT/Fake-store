@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 
 function CategoryList({ categories, getCatItems, setShowCat, showCat }) {
   let params = useParams();
+
   return (
     <nav id="category-list">
       {!showCat &&
@@ -9,7 +10,7 @@ function CategoryList({ categories, getCatItems, setShowCat, showCat }) {
           <Link to={`/layout/${cat}`} key={i}>
             <div
               className={
-                Object.values(params)[0] == cat
+                Object.values(params)[0] === cat
                   ? "colored-category"
                   : "category"
               }

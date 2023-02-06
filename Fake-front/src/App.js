@@ -1,6 +1,6 @@
 import { useState } from "react";
-import UserLogin from "./components/Admin/UserLogin";
-import ProjectContainer from "./components/Layout/ProjectContainer";
+import UserLogin from "./pages/UserLogin";
+import ProjectContainer from "./pages/ProjectContainer";
 function App() {
   const [canLog, setCanLog] = useState(false);
   const [isAdmin, setIsAdmin] = useState(true);
@@ -14,7 +14,7 @@ function App() {
           setIsAdmin={setIsAdmin}
         />
       )}
-      {canLog && <ProjectContainer isAdmin={isAdmin} />}
+      {canLog && <ProjectContainer isAdmin={isAdmin} setCanLog={setCanLog} />}
     </div>
   );
 }
