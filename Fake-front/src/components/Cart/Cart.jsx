@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import apiCalls from "../../functions/apiRequest";
 import main from "../../stores/main";
 const { productsData } = main;
-console.log("dsfsd*******", productsData);
 
 function Cart() {
   const [total, setTotal] = useState(0);
@@ -108,9 +107,11 @@ function Cart() {
           );
         })}
       </div>
-      <button onClick={() => endOfBuyingCycle()} id="buy-button">
-        Buy
-      </button>
+      {cartItem.length > 0 && (
+        <button onClick={() => endOfBuyingCycle()} id="buy-button">
+          Buy
+        </button>
+      )}
     </nav>
   );
 }

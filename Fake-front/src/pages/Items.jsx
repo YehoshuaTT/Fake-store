@@ -1,11 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { React } from "react";
 import { Link } from "react-router-dom";
+import ButtonForProduct from "../components/ButtonForProduct/ButtonForProduct";
 import main from "../stores/main";
 const { productsData } = main;
 
 function Items({ catItems }) {
-  const { increase, decrease, cartItem } = productsData;
+  const { cartItem } = productsData;
   return (
     <div className="category-name-container">
       <div className="opend-category">
@@ -21,37 +22,7 @@ function Items({ catItems }) {
                 ></img>
               </Link>
               <div className="price">{v.price} $</div>
-              {cartItem.find((item) => item.id === v.id) ? (
-                <div className="buttons-in-item">
-                  <img
-                    src="https://findicons.com/files/icons/1014/ivista/128/plus.png"
-                    alt="plus"
-                    className="inc-dec-category"
-                    onClick={() => increase(v)}
-                  />
-                  {cartItem.find((item) => item.id === v.id).amount}
-                  <img
-                    alt="minus"
-                    src="https://findicons.com/files/icons/1014/ivista/128/minus.png"
-                    className="inc-dec-category"
-                    onClick={() =>
-                      decrease(
-                        v,
-                        cartItem.find((item) => item.id === v.id).amount
-                      )
-                    }
-                  />
-                </div>
-              ) : (
-                <button
-                  className="ATC-bottun"
-                  onClick={() => {
-                    increase(v);
-                  }}
-                >
-                  Add to Cart
-                </button>
-              )}
+              <ButtonForProduct cartItem={cartItem} item={v} />
               <h5 className="h3-item-title"> {v.title}</h5>
             </div>
           );

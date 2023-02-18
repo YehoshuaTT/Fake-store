@@ -134,6 +134,7 @@ a {
   padding-left: 10%;
   padding-right: 10%;
 }
+
 .spread-category {
   text-transform: capitalize;
   font-size: x-large;
@@ -160,9 +161,9 @@ a {
   display: flex;
   width: 69%;
   justify-content: flex-start;
-  flex-direction: column;
   flex-wrap: wrap;
   align-content: space-around;
+  flex-direction: column;
 }
 .opend-category {
   display: flex;
