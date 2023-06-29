@@ -44,23 +44,13 @@ const Table = ({ data }) => {
   };
 
   const handleSave = (index) => {
-    setItems([
-      ...items.slice(0, index),
-      tempValues[index],
-      ...items.slice(index + 1),
-    ]);
+    // setItems([
+    //   ...items.slice(0, index),
+    //   tempValues[index],
+    //   ...items.slice(index + 1),
+    // ]);
     setEditMode({ ...editMode, [index]: null });
     setTempValues({ ...tempValues, [index]: null });
-    // const options = {
-    //   method: "PUT",
-    //   url: `${baseURL}/products'`,
-    //   data: items[index],
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-    console.log("theprodect: ", items[index]);
-    // sendUpdate();
   };
 
   const handleCancel = (index) => {
@@ -125,7 +115,6 @@ const Table = ({ data }) => {
                     <input
                       type="text"
                       name="image"
-                      value={item.image}
                       onChange={(e) => handleChange(e, index)}
                     />
                   ) : (
@@ -137,7 +126,6 @@ const Table = ({ data }) => {
                     <input
                       type="text"
                       name="name"
-                      value={item.title}
                       onChange={(e) => handleChange(e, index)}
                     />
                   ) : (
@@ -150,7 +138,6 @@ const Table = ({ data }) => {
                       <select
                         type="text"
                         name="category"
-                        value={item.category}
                         onChange={(e) => handleChange(e, index)}
                       >
                         {categories.map((v) => {
@@ -167,7 +154,6 @@ const Table = ({ data }) => {
                     <input
                       type="text"
                       name="price"
-                      value={item.price}
                       onChange={(e) => handleChange(e, index)}
                     />
                   ) : (
@@ -179,7 +165,6 @@ const Table = ({ data }) => {
                     <input
                       type="text"
                       name="inStock"
-                      value={item.inStock}
                       onChange={(e) => handleChange(e, index)}
                     />
                   ) : (
@@ -192,7 +177,6 @@ const Table = ({ data }) => {
                       id="description"
                       type="text"
                       name="description"
-                      value={item.description}
                       onChange={(e) => handleChange(e, index)}
                     />
                   ) : (
@@ -202,7 +186,9 @@ const Table = ({ data }) => {
                 <td>
                   {editMode[index] && (
                     <>
-                      <button onClick={() => handleSave(index)}>Save</button>
+                      <button onClick={() => handleSave(index, item)}>
+                        Save
+                      </button>
                       <button onClick={() => handleCancel(index)}>
                         Cancel
                       </button>
